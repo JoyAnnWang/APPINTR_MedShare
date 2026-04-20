@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>MedShare Frontend</title>
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+   <div class="container">
+       <h1>MedShare System</h1>
+       <p class="subtitle">Plain Frontend Demo using HTML, CSS, and JavaScript</p>
+
+
+       <section class="card">
+           <h2>Staffs</h2>
+           <p id="students-message" class="message">Loading staffs...</p>
+
+
+           <table id="staffs-table" class="data-table hidden">
+               <thead>
+                   <tr>
+                       <th>ID</th>
+                       <th>Staff ID</th>
+                       <th>Last Name</th>
+                       <th>First Name</th>
+                       <th>Course</th>
+                       <th>Gender</th>
+                       <th>Role</th>
+                   </tr>
+               </thead>
+               <tbody id="staffs-body"></tbody>
+           </table>
+       </section>
+
+
+       <section class="card">
+           <h2>Patients</h2>
+           <p id="patients-message" class="message">Loading patients...</p>
+
+
+           <table id="patients-table" class="data-table hidden">
+               <thead>
+                   <tr>
+                       <th>ID</th>
+                       <th>Patient ID</th>
+                       <th>Last Name</th>
+                       <th>First Name</th>
+                       <th>Gender</th>
+                       <th>Email</th>
+                       <th>Course</th>
+                       <th>Status</th>
+                   </tr>
+               </thead>
+               <tbody id="patients-body"></tbody>
+           </table>
+       </section>
+
+
+       <section class="card">
+           <h2>Items</h2>
+           <p id="items-message" class="message">Loading items...</p>
+
+
+           <table id="items-table" class="data-table hidden">
+               <thead>
+                   <tr>
+                       <th>ID</th>
+                       <th>Item ID</th>
+                       <th>Item Name</th>
+                       <th>Item Type</th>
+                       <th>Status</th>
+                   </tr>
+               </thead>
+               <tbody id="items-body"></tbody>
+           </table>
+       </section>
+   </div>
+
+
+   <section class="card">
+           <h2>Issuances</h2>
+           <p id="issuances-message" class="message">Loading issuances...</p>
+
+
+           <table id="issuances-table" class="data-table hidden">
+               <thead>
+                   <tr>
+                       <th>ID</th>
+                       <th>Issuance ID</th>
+                       <th>Item</th>
+                       <th>Patient</th>
+                   </tr>
+               </thead>
+               <tbody id="issuances-body"></tbody>
+           </table>
+       </section>
+
+
+   <section class="card">
+           <h2>Returns</h2>
+           <p id="returns-message" class="message">Loading returns...</p>
+
+
+           <table id="returns-table" class="data-table hidden">
+               <thead>
+                   <tr>
+                       <th>ID</th>
+                       <th>Return ID</th>
+                       <th>Item</th>
+                       <th>Patient</th>
+                   </tr>
+               </thead>
+               <tbody id="returns-body"></tbody>
+           </table>
+       </section>
+
+
+   <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>
+
