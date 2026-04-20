@@ -1,5 +1,5 @@
-from django.shortcuts import render
 from rest_framework import generics
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from .models import Role, Status, ItemStatus, ItemType, Staff, Patient, Item, Issuance, Return
 from .serializers import (
    RoleSerializer,
@@ -42,14 +42,15 @@ class ItemTypeListAPIView(generics.ListAPIView):
    serializer_class = ItemTypeSerializer
 
 
-
-
-class StaffListAPIView(generics.ListAPIView):
+class StaffListCreateAPIView(generics.ListCreateAPIView):
    queryset = Staff.objects.select_related(
-       'role'
-   ).all().order_by('last_name','first_name')
+      'role',
+   ).all().order_by('last_name', 'first_name')
    serializer_class = StaffSerializer
+   parser_classes = [MultiPartParser, FormParser, JSONParser]
 
+   def perform_create(self, serializer):
+      serializer.save()
 
 
 
@@ -92,6 +93,4 @@ class ReturnListAPIView(generics.ListAPIView):
 
 
 
-def index(request):
-   return render(request, 'index.html')
 

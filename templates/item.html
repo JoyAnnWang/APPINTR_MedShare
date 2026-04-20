@@ -1,0 +1,255 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+<meta charset="utf-8" />
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<title>MedShare - Items</title>
+<script src="{% static 'js/theme-init.js' %}"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+<script>
+tailwind.config = {
+    darkMode: "class",
+    theme: {
+        extend: {
+            colors: {
+                primary: "#3211d4",
+                "background-light": "#f6f6f8",
+                "background-dark": "#131022",
+            },
+            fontFamily: {
+                display: ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+                DEFAULT: "0.25rem",
+                lg: "0.5rem",
+                xl: "0.75rem",
+                full: "9999px"
+            },
+        },
+    },
+}
+</script>
+<style>
+body {
+    font-family: 'Inter', sans-serif;
+}
+.material-symbols-outlined {
+    font-variation-settings:
+        'FILL' 0,
+        'wght' 400,
+        'GRAD' 0,
+        'opsz' 24;
+}
+</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col">
+
+    <header class="sticky top-0 z-40 flex h-16 w-full items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-6">
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2 text-primary">
+                <span class="material-symbols-outlined text-3xl font-bold">package_2</span>
+                <h2 class="text-xl font-bold tracking-tight">BorrowBox</h2>
+            </div>
+            <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
+            <h1 class="text-sm font-semibold text-slate-600 dark:text-slate-400">Item Management</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <button
+                id="themeToggle"
+                class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                type="button"
+                aria-label="Toggle dark mode"
+                title="Toggle dark mode"
+            >
+                <span id="themeIcon" class="material-symbols-outlined text-slate-600 dark:text-slate-300">dark_mode</span>
+            </button>
+            <div class="flex items-center gap-3 pl-2 border-l border-slate-200 dark:border-slate-800">
+                <div class="flex flex-col items-end text-xs">
+                    <span class="font-bold">Admin User</span>
+                    <span class="text-slate-500">Super Administrator</span>
+                </div>
+                <div class="h-10 w-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden">
+                    <img
+                        alt="Profile Avatar"
+                        class="h-full w-full object-cover"
+                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIG97uiBKPT0CIAR7tAC2fn4l-3otj17WwIbaOOV73jcBj5nDr2udWutND-SAvMZnKftSuwm2j8hDm6Xol6YA55lfCJELDkWAAuTcvRbDbxQJ-pmay1WqFI8pIApjE0wzKZ8jV3EJSscN4u5Y_uWTmTA_pKbS43S-T_4f7u9YS8FQzak5R3ulvJAn6xeIddB3GECIFek25V2y-zDCJFEvkWYlvPBPx7F0MqPk6gUSy6ozRi2YRzCxSZZze4OMvEw2YmejNGdQ"
+                    />
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+
+        <aside class="hidden lg:flex w-72 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark p-4 overflow-y-auto">
+            <nav class="space-y-1">
+                <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">General</p>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="admindashboard.html">
+                    <span class="material-symbols-outlined text-xl">grid_view</span>
+                    <span class="text-sm">Dashboard</span>
+                </a>
+                <div class="pt-4 pb-2">
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Management</p>
+                    <button
+                        class="menu-toggle w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
+                        type="button"
+                        data-target="userManagementMenu"
+                        aria-expanded="false"
+                    >
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl">group</span>
+                            <span class="text-sm">User Management</span>
+                        </div>
+                        <span class="material-symbols-outlined text-sm menu-arrow">expand_more</span>
+                    </button>
+                    <div id="userManagementMenu" class="hidden ml-5 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-4">
+                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="patients.html">
+                            <span class="material-symbols-outlined text-lg">personal_injury</span>
+                            <span>Patients</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="staff.html">
+                            <span class="material-symbols-outlined text-lg">school</span>
+                            <span>Staff</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="employees.html">
+                            <span class="material-symbols-outlined text-lg">badge</span>
+                            <span>Employees</span>
+                        </a>
+                    </div>
+                    <button
+                        class="menu-toggle mt-1 w-full flex items-center justify-between px-3 py-2 rounded-lg bg-primary text-white font-medium"
+                        type="button"
+                        data-target="inventoryMenu"
+                        aria-expanded="true"
+                    >
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-xl">inventory_2</span>
+                            <span class="text-sm">Inventory</span>
+                        </div>
+                        <span class="material-symbols-outlined text-sm menu-arrow">expand_less</span>
+                    </button>
+                    <div id="inventoryMenu" class="ml-5 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-4">
+                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="itemmasterfile.html">
+                            <span class="material-symbols-outlined text-lg">inventory</span>
+                            <span>Item Masterfile</span>
+                        </a>
+                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary text-sm font-medium" href="items.html">
+                            <span class="material-symbols-outlined text-lg">edit_note</span>
+                            <span>Item Management</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="pt-4 pb-2">
+                    <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Operations</p>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="borrowingrequests.html">
+                        <span class="material-symbols-outlined text-xl">handshake</span>
+                        <span class="text-sm">Borrowing Requests</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="returns.html">
+                        <span class="material-symbols-outlined text-xl">assignment_return</span>
+                        <span class="text-sm">Returns</span>
+                    </a>
+                </div>
+            </nav>
+            <div class="mt-auto space-y-3 pt-4">
+                <a href="signin.html" class="flex items-center justify-center gap-2 w-full rounded-xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-600 hover:bg-red-100 transition-colors dark:border-red-900/40 dark:bg-red-900/20 dark:text-red-400 dark:hover:bg-red-900/30">
+                    <span class="material-symbols-outlined text-lg">logout</span>
+                    <span>Sign Out</span>
+                </a>
+                <div class="p-4 bg-primary/5 rounded-xl border border-primary/10">
+                    <p class="text-xs font-semibold text-primary mb-1">Academic Year 25/26</p>
+                    <p class="text-[10px] text-slate-500 leading-tight">Server status: Operational<br />Last backup: 2h ago</p>
+                </div>
+            </div>
+        </aside>
+
+        <main class="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
+
+            <!-- Search & Add -->
+            <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
+                <div class="relative w-full xl:max-w-md">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+                    <input
+                        id="itemSearch"
+                        class="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
+                        placeholder="Search by name or item ID..."
+                        type="text"
+                    />
+                </div>
+                <div class="flex items-center gap-3">
+                    <button class="bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-sm">
+                        <span class="material-symbols-outlined text-lg">add_box</span>
+                        <span>Add Item</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Title & Filters -->
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl font-black tracking-tight">Item Directory</h2>
+                    <p class="text-slate-500 text-sm mt-1">Manage all registered items and their availability.</p>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    <select id="itemTypeFilter" class="px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none">
+                        <option value="">All Types</option>
+                    </select>
+                    <select id="itemStatusFilter" class="px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none">
+                        <option value="">All Statuses</option>
+                    </select>
+                    <button id="resetFilters" class="flex items-center gap-2 px-3 py-2 text-primary bg-primary/10 rounded-lg text-sm font-medium hover:bg-primary/20">
+                        <span class="material-symbols-outlined text-lg">filter_list</span>
+                        <span>Reset Filters</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Table -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Item Info</th>
+                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Type</th>
+                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Status</th>
+                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Date Added</th>
+                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="itemTableBody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                            <tr>
+                                <td colspan="5" class="px-6 py-10 text-center text-sm text-slate-500">Loading items...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination footer -->
+                <div class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <p id="itemSummary" class="text-sm text-slate-500">
+                        Showing <span class="font-semibold">0</span> items
+                    </p>
+                    <div class="flex items-center gap-2">
+                        <button class="p-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-400 opacity-50 cursor-not-allowed" disabled>
+                            <span class="material-symbols-outlined">chevron_left</span>
+                        </button>
+                        <button class="px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold shadow-sm">1</button>
+                        <button class="p-2 bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg text-slate-400 opacity-50 cursor-not-allowed" disabled>
+                            <span class="material-symbols-outlined">chevron_right</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+</div>
+<script src="{% static 'js/admindashboard.js' %}"></script>
+<script src="{% static 'js/item.js' %}"></script>
+</body>
+</html>

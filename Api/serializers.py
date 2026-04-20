@@ -57,7 +57,9 @@ class StaffSerializer(serializers.ModelSerializer):
            'role_name',
            'created_at',
        ]
-
+       extra_kwargs = {
+           'role': {'read_only': True}
+       }
 
 
 
@@ -82,7 +84,9 @@ class PatientSerializer(serializers.ModelSerializer):
            'status_name',
            'created_at',
        ]
-
+       extra_kwargs = {
+           'status': {'read_only': True}
+       }
 
 
 
