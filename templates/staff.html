@@ -2,52 +2,47 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
-<meta charset="utf-8" />
-<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<title>MedShare - Staff</title>
-<script src="{% static 'js/theme-init.js' %}"></script>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-<script>
-tailwind.config = {
-    darkMode: "class",
-    theme: {
-        extend: {
-            colors: {
-                primary: "#3211d4",
-                "background-light": "#f6f6f8",
-                "background-dark": "#131022",
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>MedShare - Staff</title>
+    <script src="{% static 'js/theme-init.js' %}"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3211d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#131022",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                },
             },
-            fontFamily: {
-                display: ["Inter", "sans-serif"]
-            },
-            borderRadius: {
-                DEFAULT: "0.25rem",
-                lg: "0.5rem",
-                xl: "0.75rem",
-                full: "9999px"
-            },
-        },
-    },
-}
-</script>
-<style>
-body {
-    font-family: 'Inter', sans-serif;
-}
-.material-symbols-outlined {
-    font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 24;
-}
-</style>
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased transition-colors duration-200">
 <div class="relative flex min-h-screen w-full flex-col">
 
+    <!-- Top Navbar -->
     <header class="sticky top-0 z-40 flex h-16 w-full items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-6">
         <div class="flex items-center gap-4">
             <div class="flex items-center gap-2 text-primary">
@@ -85,6 +80,7 @@ body {
 
     <div class="flex flex-1 overflow-hidden">
 
+        <!-- Sidebar -->
         <aside class="hidden lg:flex w-72 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark p-4 overflow-y-auto">
             <nav class="space-y-1">
                 <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">General</p>
@@ -108,12 +104,11 @@ body {
                     </button>
                     <div id="userManagementMenu" class="ml-5 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-4">
                         <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary text-sm font-medium" href="staff.html">
-                            <span class="material-symbols-outlined text-lg">school</span>
                             <span>Staff</span>
                         </a>
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="employees.html">
+                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="patient.html">
                             <span class="material-symbols-outlined text-lg">badge</span>
-                            <span>Employees</span>
+                            <span>Patients</span>
                         </a>
                     </div>
                     <button
@@ -163,8 +158,10 @@ body {
             </div>
         </aside>
 
+        <!-- Main Content -->
         <main class="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
 
+            <!-- Search + Action -->
             <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
                 <div class="relative w-full xl:max-w-md">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
@@ -176,13 +173,14 @@ body {
                     />
                 </div>
                 <div class="flex items-center gap-3">
-                    <button class="bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-sm">
+                    <button id="openAddStaffModal" class="bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-sm">
                         <span class="material-symbols-outlined text-lg">person_add</span>
                         <span>Add Staff</span>
                     </button>
                 </div>
             </div>
 
+            <!-- Title + Filters -->
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 <div>
                     <h2 class="text-2xl font-black tracking-tight">Staff Directory</h2>
@@ -208,6 +206,7 @@ body {
                 </div>
             </div>
 
+            <!-- Table Card -->
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
@@ -227,6 +226,7 @@ body {
                         </tbody>
                     </table>
                 </div>
+                <!-- Footer -->
                 <div class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p id="staffSummary" class="text-sm text-slate-500">
                         Showing <span class="font-semibold">0</span> staff
@@ -246,6 +246,275 @@ body {
         </main>
     </div>
 </div>
+
+<!-- Add Staff Modal -->
+<div id="addStaffModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
+    <div class="w-full max-w-4xl rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-6 py-4">
+            <div>
+                <h3 class="text-lg font-bold">Add Staff</h3>
+                <p class="text-sm text-slate-500">Fill in the staff information below.</p>
+            </div>
+            <button id="closeAddStaffModal" class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form id="addStaffForm" class="p-6 space-y-6" enctype="multipart/form-data">
+            <div id="addStaffMessage" class="hidden rounded-lg px-4 py-3 text-sm"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Staff ID *</label>
+                    <input id="staff_id" name="staff_id" type="text" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Last Name *</label>
+                    <input id="last_name" name="last_name" type="text" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">First Name *</label>
+                    <input id="first_name" name="first_name" type="text" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Middle Initial</label>
+                    <input id="middle_initial" name="middle_initial" type="text" maxlength="10" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Gender *</label>
+                    <select id="gender" name="gender" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Department *</label>
+                    <input id="department" name="department" type="text" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Role *</label>
+                    <select id="modalRole" name="role" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                        <option value="">Loading roles...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Email</label>
+                    <input id="email" name="email" type="email" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Phone</label>
+                    <input id="phone" name="phone" type="text" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Photo</label>
+                    <input id="photo" name="photo" type="file" accept="image/*" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-3 border-t border-slate-200 dark:border-slate-800 pt-4">
+                <button type="button" id="cancelAddStaff" class="rounded-xl border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800">
+                    Cancel
+                </button>
+                <button type="submit" id="saveStaffButton" class="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary/90">
+                    Save Staff
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Staff Modal -->
+<div id="editStaffModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
+    <div class="w-full max-w-4xl rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-6 py-4">
+            <div>
+                <h3 class="text-lg font-bold">Edit Staff</h3>
+                <p class="text-sm text-slate-500">Update the selected staff information.</p>
+            </div>
+            <button id="closeEditStaffModal" class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form id="editStaffForm" class="p-6 space-y-6" enctype="multipart/form-data">
+            <input type="hidden" id="edit_staff_id" />
+            <div id="editStaffMessage" class="hidden rounded-lg px-4 py-3 text-sm"></div>
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Staff ID *</label>
+                    <input id="edit_staff_id_field" name="staff_id" type="text" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Last Name *</label>
+                    <input id="edit_last_name" name="last_name" type="text" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">First Name *</label>
+                    <input id="edit_first_name" name="first_name" type="text" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Middle Initial</label>
+                    <input id="edit_middle_initial" name="middle_initial" type="text" maxlength="10" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Gender *</label>
+                    <select id="edit_gender" name="gender" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                        <option value="">Select gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Department *</label>
+                    <input id="edit_department" name="department" type="text" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Role *</label>
+                    <select id="edit_modalRole" name="role" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                        <option value="">Loading roles...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Email</label>
+                    <input id="edit_email" name="email" type="email" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Phone</label>
+                    <input id="edit_phone" name="phone" type="text" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Photo</label>
+                    <input id="edit_photo" name="photo" type="file" accept="image/*" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-3 border-t border-slate-200 dark:border-slate-800 pt-4">
+                <button type="button" id="cancelEditStaff" class="rounded-xl border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800">
+                    Cancel
+                </button>
+                <button type="submit" id="updateStaffButton" class="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary/90">
+                    Update Staff
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- View Staff Modal -->
+<div id="viewStaffModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
+    <div class="w-full max-w-3xl rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-6 py-4">
+            <div>
+                <h3 class="text-lg font-bold">View Staff</h3>
+                <p class="text-sm text-slate-500">Staff details and role information.</p>
+            </div>
+            <button id="closeViewStaffModal" class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-6 space-y-6">
+            <!-- Header -->
+            <div class="flex flex-col md:flex-row md:items-center gap-4">
+                <div id="viewStaffPhotoWrapper" class="h-20 w-20 rounded-full bg-primary/10 text-primary flex items-center justify-center text-2xl font-bold overflow-hidden">
+                    --
+                </div>
+                <div>
+                    <h4 id="viewFullName" class="text-xl font-bold">-</h4>
+                    <p id="viewStaffId" class="text-sm text-slate-500">-</p>
+                    <div class="mt-2 flex flex-wrap gap-2">
+                        <span id="viewGenderBadge" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">-</span>
+                        <span id="viewRoleBadge" class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary">-</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Detail Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+                    <h5 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Personal Information</h5>
+                    <div>
+                        <p class="text-xs text-slate-500">First Name</p>
+                        <p id="viewFirstName" class="text-sm font-medium">-</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500">Last Name</p>
+                        <p id="viewLastName" class="text-sm font-medium">-</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500">Middle Initial</p>
+                        <p id="viewMiddleInitial" class="text-sm font-medium">-</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500">Gender</p>
+                        <p id="viewGenderText" class="text-sm font-medium">-</p>
+                    </div>
+                </div>
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+                    <h5 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Role Information</h5>
+                    <div>
+                        <p class="text-xs text-slate-500">Department</p>
+                        <p id="viewDepartment" class="text-sm font-medium">-</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500">Role</p>
+                        <p id="viewRoleText" class="text-sm font-medium">-</p>
+                    </div>
+                </div>
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+                    <h5 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Contact Information</h5>
+                    <div>
+                        <p class="text-xs text-slate-500">Email</p>
+                        <p id="viewEmail" class="text-sm font-medium">-</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500">Phone</p>
+                        <p id="viewPhone" class="text-sm font-medium">-</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end border-t border-slate-200 dark:border-slate-800 pt-4">
+                <button id="viewStaffDoneButton" class="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary/90">
+                    Close
+                </button>
+            </div>
+            <!-- Delete Staff Modal -->
+            <div id="deleteStaffModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
+                <div class="w-full max-w-md rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-slate-200 dark:borderslate-800 px-6 py-4">
+                        <div>
+                            <h3 class="text-lg font-bold text-red-600">Delete Staff</h3>
+                            <p class="text-sm text-slate-500">This action cannot be undone.</p>
+                        </div>
+                        <button id="closeDeleteStaffModal" class="flex h-10 w-10 items-center justifycenter rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                            <span class="material-symbols-outlined">close</span>
+                        </button>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <input type="hidden" id="delete_staff_id" />
+                        <div id="deleteStaffMessage" class="hidden rounded-lg px-4 py-3 text-sm"></div>
+                        <div class="rounded-xl border border-red-200 bg-red-50 dark:bg-red-900/10 dark:border-red-900/30 p-4">
+                            <p class="text-sm text-slate-700 dark:text-slate-200">
+                                Are you sure you want to delete:
+                            </p>
+                            <p id="deleteStaffName" class="mt-2 text-base font-bold text-red-600">
+                                -
+                            </p>
+                            <p id="deleteStaffNumber" class="text-sm text-slate-500">
+                                -
+                            </p>
+                        </div>
+                        <div class="flex items-center justify-end gap-3 border-t border-slate-200 dark:border-slate-800 pt-4">
+                            <button type="button" id="cancelDeleteStaff" class="rounded-xl border borderslate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800">
+                                Cancel
+                            </button>
+                            <button type="button" id="confirmDeleteStaffButton" class="rounded-xl bg-red600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700">
+                                Delete Staff
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="{% static 'js/admindashboard.js' %}"></script>
 <script src="{% static 'js/staff.js' %}"></script>
 </body>

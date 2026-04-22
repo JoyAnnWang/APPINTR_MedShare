@@ -2,52 +2,42 @@
 <!DOCTYPE html>
 <html lang="en" class="light">
 <head>
-<meta charset="utf-8" />
-<meta content="width=device-width, initial-scale=1.0" name="viewport" />
-<title>MedShare - Issuances</title>
-<script src="{% static 'js/theme-init.js' %}"></script>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-<script>
-tailwind.config = {
-    darkMode: "class",
-    theme: {
-        extend: {
-            colors: {
-                primary: "#3211d4",
-                "background-light": "#f6f6f8",
-                "background-dark": "#131022",
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>BorrowBox - Issuances</title>
+    <script src="{% static 'js/theme-init.js' %}"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3211d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#131022",
+                    },
+                    fontFamily: { display: ["Inter", "sans-serif"] },
+                    borderRadius: {
+                        DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"
+                    },
+                },
             },
-            fontFamily: {
-                display: ["Inter", "sans-serif"]
-            },
-            borderRadius: {
-                DEFAULT: "0.25rem",
-                lg: "0.5rem",
-                xl: "0.75rem",
-                full: "9999px"
-            },
-        },
-    },
-}
-</script>
-<style>
-body {
-    font-family: 'Inter', sans-serif;
-}
-.material-symbols-outlined {
-    font-variation-settings:
-        'FILL' 0,
-        'wght' 400,
-        'GRAD' 0,
-        'opsz' 24;
-}
-</style>
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased transition-colors duration-200">
 <div class="relative flex min-h-screen w-full flex-col">
 
+    <!-- Top Navbar -->
     <header class="sticky top-0 z-40 flex h-16 w-full items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md px-6">
         <div class="flex items-center gap-4">
             <div class="flex items-center gap-2 text-primary">
@@ -58,13 +48,7 @@ body {
             <h1 class="text-sm font-semibold text-slate-600 dark:text-slate-400">Issuance Management</h1>
         </div>
         <div class="flex items-center gap-4">
-            <button
-                id="themeToggle"
-                class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-                type="button"
-                aria-label="Toggle dark mode"
-                title="Toggle dark mode"
-            >
+            <button id="themeToggle" class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
                 <span id="themeIcon" class="material-symbols-outlined text-slate-600 dark:text-slate-300">dark_mode</span>
             </button>
             <div class="flex items-center gap-3 pl-2 border-l border-slate-200 dark:border-slate-800">
@@ -73,11 +57,7 @@ body {
                     <span class="text-slate-500">Super Administrator</span>
                 </div>
                 <div class="h-10 w-10 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center overflow-hidden">
-                    <img
-                        alt="Profile Avatar"
-                        class="h-full w-full object-cover"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIG97uiBKPT0CIAR7tAC2fn4l-3otj17WwIbaOOV73jcBj5nDr2udWutND-SAvMZnKftSuwm2j8hDm6Xol6YA55lfCJELDkWAAuTcvRbDbxQJ-pmay1WqFI8pIApjE0wzKZ8jV3EJSscN4u5Y_uWTmTA_pKbS43S-T_4f7u9YS8FQzak5R3ulvJAn6xeIddB3GECIFek25V2y-zDCJFEvkWYlvPBPx7F0MqPk6gUSy6ozRi2YRzCxSZZze4OMvEw2YmejNGdQ"
-                    />
+                    <img alt="Profile Avatar" class="h-full w-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIG97uiBKPT0CIAR7tAC2fn4l-3otj17WwIbaOOV73jcBj5nDr2udWutND-SAvMZnKftSuwm2j8hDm6Xol6YA55lfCJELDkWAAuTcvRbDbxQJ-pmay1WqFI8pIApjE0wzKZ8jV3EJSscN4u5Y_uWTmTA_pKbS43S-T_4f7u9YS8FQzak5R3ulvJAn6xeIddB3GECIFek25V2y-zDCJFEvkWYlvPBPx7F0MqPk6gUSy6ozRi2YRzCxSZZze4OMvEw2YmejNGdQ" />
                 </div>
             </div>
         </div>
@@ -85,6 +65,7 @@ body {
 
     <div class="flex flex-1 overflow-hidden">
 
+        <!-- Sidebar -->
         <aside class="hidden lg:flex w-72 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark p-4 overflow-y-auto">
             <nav class="space-y-1">
                 <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">General</p>
@@ -94,12 +75,7 @@ body {
                 </a>
                 <div class="pt-4 pb-2">
                     <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Management</p>
-                    <button
-                        class="menu-toggle w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
-                        type="button"
-                        data-target="userManagementMenu"
-                        aria-expanded="false"
-                    >
+                    <button class="menu-toggle w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" type="button" data-target="userManagementMenu" aria-expanded="false">
                         <div class="flex items-center gap-3">
                             <span class="material-symbols-outlined text-xl">group</span>
                             <span class="text-sm">User Management</span>
@@ -120,12 +96,7 @@ body {
                             <span>Employees</span>
                         </a>
                     </div>
-                    <button
-                        class="menu-toggle mt-1 w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors"
-                        type="button"
-                        data-target="inventoryMenu"
-                        aria-expanded="false"
-                    >
+                    <button class="menu-toggle mt-1 w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" type="button" data-target="inventoryMenu" aria-expanded="false">
                         <div class="flex items-center gap-3">
                             <span class="material-symbols-outlined text-xl">inventory_2</span>
                             <span class="text-sm">Inventory</span>
@@ -137,7 +108,7 @@ body {
                             <span class="material-symbols-outlined text-lg">inventory</span>
                             <span>Item Masterfile</span>
                         </a>
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="items.html">
+                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="itemmanagement.html">
                             <span class="material-symbols-outlined text-lg">edit_note</span>
                             <span>Item Management</span>
                         </a>
@@ -145,12 +116,12 @@ body {
                 </div>
                 <div class="pt-4 pb-2">
                     <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Operations</p>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary text-sm font-medium" href="issuances.html">
-                        <span class="material-symbols-outlined text-xl">assignment_turned_in</span>
-                        <span>Issuances</span>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white font-medium" href="issuances.html">
+                        <span class="material-symbols-outlined text-xl">handshake</span>
+                        <span class="text-sm">Issuances</span>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="borrowingrequests.html">
-                        <span class="material-symbols-outlined text-xl">handshake</span>
+                        <span class="material-symbols-outlined text-xl">assignment_return</span>
                         <span class="text-sm">Borrowing Requests</span>
                     </a>
                     <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="returns.html">
@@ -171,32 +142,28 @@ body {
             </div>
         </aside>
 
+        <!-- Main Content -->
         <main class="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
 
-            <!-- Search & Add -->
+            <!-- Search + Action -->
             <div class="flex flex-col xl:flex-row xl:items-center xl:justify-between gap-4">
                 <div class="relative w-full xl:max-w-md">
                     <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
-                    <input
-                        id="issuanceSearch"
-                        class="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none"
-                        placeholder="Search by issuance ID, item, or patient..."
-                        type="text"
-                    />
+                    <input id="issuanceSearch" class="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none" placeholder="Search by issuance ID, item, or patient..." type="text" />
                 </div>
                 <div class="flex items-center gap-3">
-                    <button class="bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-sm">
+                    <button id="openAddIssuanceModal" class="bg-primary hover:bg-primary/90 text-white px-4 py-3 rounded-xl text-sm font-bold flex items-center gap-2 transition-all shadow-sm">
                         <span class="material-symbols-outlined text-lg">add_circle</span>
-                        <span>New Issuance</span>
+                        <span>Add Issuance</span>
                     </button>
                 </div>
             </div>
 
-            <!-- Title & Filters -->
+            <!-- Title + Filters -->
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
                 <div>
                     <h2 class="text-2xl font-black tracking-tight">Issuance Records</h2>
-                    <p class="text-slate-500 text-sm mt-1">Track all item issuances made to patients.</p>
+                    <p class="text-slate-500 text-sm mt-1">Manage all item issuances to patients.</p>
                 </div>
                 <div class="flex flex-wrap gap-2">
                     <select id="itemFilter" class="px-3 py-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-medium text-slate-600 dark:text-slate-300 focus:ring-2 focus:ring-primary/30 focus:border-primary outline-none">
@@ -212,7 +179,7 @@ body {
                 </div>
             </div>
 
-            <!-- Table -->
+            <!-- Table Card -->
             <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
@@ -221,7 +188,7 @@ body {
                                 <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Issuance ID</th>
                                 <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Item</th>
                                 <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Patient</th>
-                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Date Issued</th>
+                                <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500">Created At</th>
                                 <th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-slate-500 text-right">Actions</th>
                             </tr>
                         </thead>
@@ -232,8 +199,7 @@ body {
                         </tbody>
                     </table>
                 </div>
-
-                <!-- Pagination footer -->
+                <!-- Footer -->
                 <div class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/30 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p id="issuanceSummary" class="text-sm text-slate-500">
                         Showing <span class="font-semibold">0</span> issuances
@@ -253,7 +219,193 @@ body {
         </main>
     </div>
 </div>
+
+<!-- Add Issuance Modal -->
+<div id="addIssuanceModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
+    <div class="w-full max-w-xl rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-6 py-4">
+            <div>
+                <h3 class="text-lg font-bold">Add Issuance</h3>
+                <p class="text-sm text-slate-500">Fill in the issuance information below.</p>
+            </div>
+            <button id="closeAddIssuanceModal" class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form id="addIssuanceForm" class="p-6 space-y-6">
+            <div id="addIssuanceMessage" class="hidden rounded-lg px-4 py-3 text-sm"></div>
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Issuance ID *</label>
+                    <input id="issuance_id" name="issuance_id" type="text" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Item *</label>
+                    <select id="add_item" name="item" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                        <option value="">Loading items...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Patient *</label>
+                    <select id="add_patient" name="patient" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                        <option value="">Loading patients...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-3 border-t border-slate-200 dark:border-slate-800 pt-4">
+                <button type="button" id="cancelAddIssuance" class="rounded-xl border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800">
+                    Cancel
+                </button>
+                <button type="submit" id="saveIssuanceButton" class="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary/90">
+                    Save Issuance
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Issuance Modal -->
+<div id="editIssuanceModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
+    <div class="w-full max-w-xl rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-6 py-4">
+            <div>
+                <h3 class="text-lg font-bold">Edit Issuance</h3>
+                <p class="text-sm text-slate-500">Update the selected issuance record.</p>
+            </div>
+            <button id="closeEditIssuanceModal" class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form id="editIssuanceForm" class="p-6 space-y-6">
+            <input type="hidden" id="edit_issuance_pk" />
+            <div id="editIssuanceMessage" class="hidden rounded-lg px-4 py-3 text-sm"></div>
+            <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Issuance ID *</label>
+                    <input id="edit_issuance_id" name="issuance_id" type="text" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Item *</label>
+                    <select id="edit_item" name="item" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                        <option value="">Loading items...</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="mb-2 block text-sm font-medium">Patient *</label>
+                    <select id="edit_patient" name="patient" required class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20">
+                        <option value="">Loading patients...</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex items-center justify-end gap-3 border-t border-slate-200 dark:border-slate-800 pt-4">
+                <button type="button" id="cancelEditIssuance" class="rounded-xl border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800">
+                    Cancel
+                </button>
+                <button type="submit" id="updateIssuanceButton" class="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary/90">
+                    Update Issuance
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- View Issuance Modal -->
+<div id="viewIssuanceModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
+    <div class="w-full max-w-xl rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-6 py-4">
+            <div>
+                <h3 class="text-lg font-bold">View Issuance</h3>
+                <p class="text-sm text-slate-500">Issuance details and linked records.</p>
+            </div>
+            <button id="closeViewIssuanceModal" class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-6 space-y-6">
+            <!-- Header -->
+            <div class="flex items-center gap-4">
+                <div class="h-14 w-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl">handshake</span>
+                </div>
+                <div>
+                    <h4 id="viewIssuanceIdHeader" class="text-xl font-bold">-</h4>
+                    <p id="viewCreatedAtHeader" class="text-sm text-slate-500">-</p>
+                </div>
+            </div>
+            <!-- Detail Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+                    <h5 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Item</h5>
+                    <div>
+                        <p class="text-xs text-slate-500">Item ID</p>
+                        <p id="viewLinkedItemId" class="text-sm font-medium">-</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500">Item Name</p>
+                        <p id="viewLinkedItemName" class="text-sm font-medium">-</p>
+                    </div>
+                </div>
+                <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-3">
+                    <h5 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Patient</h5>
+                    <div>
+                        <p class="text-xs text-slate-500">Patient ID</p>
+                        <p id="viewLinkedPatientId" class="text-sm font-medium">-</p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500">Patient Name</p>
+                        <p id="viewLinkedPatientName" class="text-sm font-medium">-</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-xl border border-slate-200 dark:border-slate-800 p-4 space-y-2">
+                <h5 class="text-sm font-bold text-slate-500 uppercase tracking-wider">Timestamps</h5>
+                <div>
+                    <p class="text-xs text-slate-500">Created At</p>
+                    <p id="viewCreatedAt" class="text-sm font-medium">-</p>
+                </div>
+            </div>
+            <div class="flex justify-end border-t border-slate-200 dark:border-slate-800 pt-4">
+                <button id="viewIssuanceDoneButton" class="rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white hover:bg-primary/90">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Issuance Modal -->
+<div id="deleteIssuanceModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
+    <div class="w-full max-w-md rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-2xl overflow-hidden">
+        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 px-6 py-4">
+            <div>
+                <h3 class="text-lg font-bold text-red-600">Delete Issuance</h3>
+                <p class="text-sm text-slate-500">This action cannot be undone.</p>
+            </div>
+            <button id="closeDeleteIssuanceModal" class="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="p-6 space-y-4">
+            <input type="hidden" id="delete_issuance_pk" />
+            <div id="deleteIssuanceMessage" class="hidden rounded-lg px-4 py-3 text-sm"></div>
+            <div class="rounded-xl border border-red-200 bg-red-50 dark:bg-red-900/10 dark:border-red-900/30 p-4">
+                <p class="text-sm text-slate-700 dark:text-slate-200">Are you sure you want to delete:</p>
+                <p id="deleteIssuanceName" class="mt-2 text-base font-bold text-red-600">-</p>
+                <p id="deleteIssuanceIdDisplay" class="text-sm text-slate-500">-</p>
+            </div>
+            <div class="flex items-center justify-end gap-3 border-t border-slate-200 dark:border-slate-800 pt-4">
+                <button type="button" id="cancelDeleteIssuance" class="rounded-xl border border-slate-200 dark:border-slate-700 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50 dark:hover:bg-slate-800">
+                    Cancel
+                </button>
+                <button type="button" id="confirmDeleteIssuanceButton" class="rounded-xl bg-red-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-red-700">
+                    Delete Issuance
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="{% static 'js/admindashboard.js' %}"></script>
-<script src="{% static 'js/issuance.js' %}"></script>
+<script src="{% static 'js/issuances.js' %}"></script>
 </body>
 </html>
