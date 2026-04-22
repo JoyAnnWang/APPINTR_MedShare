@@ -109,30 +109,6 @@ document.addEventListener("DOMContentLoaded", () => {
         staffSummary.innerHTML = `Showing <span class="font-semibold">0</span> staff`;
     }
 
-    // ─── Sidebar Menu Toggles ─────────────────────────────────────────────────
-    // NOTE: admindashboard.js also binds these — this block handles them
-    // specifically for pages that DON'T load admindashboard.js.
-    // If admindashboard.js is already loaded, this is safely redundant.
-
-    document.querySelectorAll(".menu-toggle").forEach(button => {
-        button.addEventListener("click", () => {
-            const targetId   = button.getAttribute("data-target");
-            const targetMenu = document.getElementById(targetId);
-            const arrow      = button.querySelector(".menu-arrow");
-            if (!targetMenu) return;
-            const isHidden = targetMenu.classList.contains("hidden");
-            if (isHidden) {
-                targetMenu.classList.remove("hidden");
-                button.setAttribute("aria-expanded", "true");
-                if (arrow) arrow.textContent = "expand_less";
-            } else {
-                targetMenu.classList.add("hidden");
-                button.setAttribute("aria-expanded", "false");
-                if (arrow) arrow.textContent = "expand_more";
-            }
-        });
-    });
-
     // ─── Theme Toggle ─────────────────────────────────────────────────────────
 
     const html        = document.documentElement;

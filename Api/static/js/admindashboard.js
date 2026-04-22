@@ -34,32 +34,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // ─── Sidebar Menu Toggles ─────────────────────────────────────────────────
-
-    const menuToggles = document.querySelectorAll(".menu-toggle");
-
-    menuToggles.forEach(function (button) {
-        button.addEventListener("click", function () {
-            const targetId   = button.getAttribute("data-target");
-            const targetMenu = document.getElementById(targetId);
-            const arrow      = button.querySelector(".menu-arrow");
-
-            if (!targetMenu) return;
-
-            const isHidden = targetMenu.classList.contains("hidden");
-
-            if (isHidden) {
-                targetMenu.classList.remove("hidden");
-                button.setAttribute("aria-expanded", "true");
-                if (arrow) arrow.textContent = "expand_less";
-            } else {
-                targetMenu.classList.add("hidden");
-                button.setAttribute("aria-expanded", "false");
-                if (arrow) arrow.textContent = "expand_more";
-            }
-        });
-    });
-
     // ─── Dashboard Totals ─────────────────────────────────────────────────────
 
     async function loadDashboardTotals() {

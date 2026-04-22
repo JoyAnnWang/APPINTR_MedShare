@@ -176,20 +176,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ─── Filters ──────────────────────────────────────────────────────────────
 
-    function populateFilters(patients) {
-        const courses  = [...new Set(patients.map(p => p.course).filter(Boolean))].sort();
-        const statuses = [...new Set(patients.map(p => p.status_name).filter(Boolean))].sort();
-
-        courseFilter.innerHTML  = `<option value="">All Courses</option>`;
-        statusFilter.innerHTML  = `<option value="">All Statuses</option>`;
-
-        courses.forEach(course => {
-            courseFilter.innerHTML += `<option value="${course}">${course}</option>`;
-        });
-
-        statuses.forEach(status => {
-            statusFilter.innerHTML += `<option value="${status}">${status}</option>`;
-        });
+    function populateFilters(_patients) {
+        // Filters are plain text inputs — no dropdown population needed.
     }
 
     function populateModalStatuses() {
@@ -206,19 +194,22 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function applyFilters() {
-        const searchValue    = patientSearch.value.trim().toLowerCase();
-        const selectedCourse = courseFilter.value;
-        const selectedStatus = statusFilter.value;
-        const selectedGender = genderFilter.value;
+        const searchValue       = patientSearch.value.trim().toLowerCase();
+        const courseFilterValue = courseFilter.value.trim().toLowerCase();
+        const statusFilterValue = statusFilter.value.trim().toLowerCase();
+        const genderFilterValue = genderFilter.value.trim().toLowerCase();
 
         const filtered = allPatients.filter(p => {
             const fullName  = `${p.last_name} ${p.first_name} ${p.middle_initial ?? ""}`.toLowerCase();
             const patientId = (p.patient_id ?? "").toLowerCase();
+            const courseStr = (p.course      ?? "").toLowerCase();
+            const statusStr = (p.status_name ?? "").toLowerCase();
+            const genderStr = (p.gender      ?? "").toLowerCase();
 
             const matchesSearch = fullName.includes(searchValue) || patientId.includes(searchValue);
-            const matchesCourse = !selectedCourse || p.course       === selectedCourse;
-            const matchesStatus = !selectedStatus || p.status_name  === selectedStatus;
-            const matchesGender = !selectedGender || p.gender       === selectedGender;
+            const matchesCourse = !courseFilterValue || courseStr.includes(courseFilterValue);
+            const matchesStatus = !statusFilterValue || statusStr.includes(statusFilterValue);
+            const matchesGender = !genderFilterValue || genderStr.includes(genderFilterValue);
 
             return matchesSearch && matchesCourse && matchesStatus && matchesGender;
         });
@@ -553,15 +544,15 @@ document.addEventListener("DOMContentLoaded", () => {
     // ─── Event Listeners ──────────────────────────────────────────────────────
 
     patientSearch.addEventListener("input", applyFilters);
-    courseFilter.addEventListener("change", applyFilters);
-    statusFilter.addEventListener("change", applyFilters);
-    genderFilter.addEventListener("change", applyFilters);
+    courseFilter.addEventListener("input",  applyFilters);
+    statusFilter.addEventListener("input",  applyFilters);
+    genderFilter.addEventListener("input",  applyFilters);
 
     resetFilters.addEventListener("click", () => {
-        patientSearch.value  = "";
-        courseFilter.value   = "";
-        statusFilter.value   = "";
-        genderFilter.value   = "";
+        patientSearch.value = "";
+        courseFilter.value  = "";
+        statusFilter.value  = "";
+        genderFilter.value  = "";
         renderPatients(allPatients);
     });
 

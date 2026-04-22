@@ -152,20 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ─── Filters ──────────────────────────────────────────────────────────────
 
-    function populateFilters(issuances) {
-        const items    = [...new Set(issuances.map(i => i.item_name).filter(Boolean))].sort();
-        const patients = [...new Set(issuances.map(i => i.patient_name).filter(Boolean))].sort();
-
-        itemFilter.innerHTML    = `<option value="">All Items</option>`;
-        patientFilter.innerHTML = `<option value="">All Patients</option>`;
-
-        items.forEach(name => {
-            itemFilter.innerHTML += `<option value="${name}">${name}</option>`;
-        });
-
-        patients.forEach(name => {
-            patientFilter.innerHTML += `<option value="${name}">${name}</option>`;
-        });
+    function populateFilters(_issuances) {
+        // Filters are plain text inputs — no dropdown population needed.
     }
 
     function populateModalDropdowns() {
@@ -187,8 +175,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function applyFilters() {
         const searchValue      = issuanceSearch.value.trim().toLowerCase();
-        const selectedItem     = itemFilter.value;
-        const selectedPatient  = patientFilter.value;
+        const itemFilterValue  = itemFilter.value.trim().toLowerCase();
+        const patientFilterValue = patientFilter.value.trim().toLowerCase();
 
         const filtered = allIssuances.filter(i => {
             const issuanceIdStr  = (i.issuance_id   ?? "").toLowerCase();
@@ -198,8 +186,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const matchesSearch  = issuanceIdStr.includes(searchValue)
                                 || itemNameStr.includes(searchValue)
                                 || patientNameStr.includes(searchValue);
-            const matchesItem    = !selectedItem    || i.item_name    === selectedItem;
-            const matchesPatient = !selectedPatient || i.patient_name === selectedPatient;
+            const matchesItem    = !itemFilterValue    || itemNameStr.includes(itemFilterValue);
+            const matchesPatient = !patientFilterValue || patientNameStr.includes(patientFilterValue);
 
             return matchesSearch && matchesItem && matchesPatient;
         });
@@ -494,14 +482,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ─── Event Listeners ──────────────────────────────────────────────────────
 
-    issuanceSearch.addEventListener("input",   applyFilters);
-    itemFilter.addEventListener("change",      applyFilters);
-    patientFilter.addEventListener("change",   applyFilters);
+    issuanceSearch.addEventListener("input",  applyFilters);
+    itemFilter.addEventListener("input",      applyFilters);
+    patientFilter.addEventListener("input",   applyFilters);
 
     resetFilters.addEventListener("click", () => {
-        issuanceSearch.value  = "";
-        itemFilter.value      = "";
-        patientFilter.value   = "";
+        issuanceSearch.value = "";
+        itemFilter.value     = "";
+        patientFilter.value  = "";
         renderIssuances(allIssuances);
     });
 

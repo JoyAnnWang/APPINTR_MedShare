@@ -93,135 +93,64 @@
                 <div class="pt-4 pb-1">
                     <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">People</p>
 
-                    <!-- Staffs — open by default since this IS the staff page -->
-                    <button class="menu-toggle w-full flex items-center justify-between px-3 py-2 rounded-lg bg-primary/5 text-primary transition-colors" type="button" data-target="staffsMenu" aria-expanded="true">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl">badge</span>
-                            <span class="text-sm font-semibold">Staffs</span>
-                        </div>
-                        <span class="material-symbols-outlined text-sm menu-arrow">expand_less</span>
-                    </button>
-                    <!-- BUG FIX: was missing "hidden" so it never collapsed; aria-expanded="true" kept in sync -->
-                    <div id="staffsMenu" class="ml-5 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-4">
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm bg-primary/10 text-primary font-medium" href="{% url 'staff-list' %}">
-                            <span class="material-symbols-outlined text-lg">list</span>
-                            <span>Staff List</span>
-                        </a>
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
-                            <span class="material-symbols-outlined text-lg">person_add</span>
-                            <span>Add Staff</span>
-                        </a>
-                    </div>
+                    <!-- Staffs -->
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-semibold transition-colors" href="{% url 'staff-list' %}">
+                        <span class="material-symbols-outlined text-xl">badge</span>
+                        <span class="text-sm">Staffs</span>
+                    </a>
 
                     <!-- Patients -->
-                    <button class="menu-toggle mt-1 w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" type="button" data-target="patientsMenu" aria-expanded="false">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl">personal_injury</span>
-                            <span class="text-sm">Patients</span>
-                        </div>
-                        <span class="material-symbols-outlined text-sm menu-arrow">expand_more</span>
-                    </button>
-                    <div id="patientsMenu" class="hidden ml-5 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-4">
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{% url 'patient-list' %}">
-                            <span class="material-symbols-outlined text-lg">list</span>
-                            <span>Patient List</span>
-                        </a>
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
-                            <span class="material-symbols-outlined text-lg">person_add</span>
-                            <span>Add Patient</span>
-                        </a>
-                    </div>
+                    <a class="mt-1 flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="{% url 'patient-list' %}">
+                        <span class="material-symbols-outlined text-xl">personal_injury</span>
+                        <span class="text-sm">Patients</span>
+                    </a>
                 </div>
 
                 <!-- Inventory -->
                 <div class="pt-4 pb-1">
                     <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Inventory</p>
 
-                    <button class="menu-toggle w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" type="button" data-target="itemsMenu" aria-expanded="false">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl">inventory_2</span>
-                            <span class="text-sm">Items</span>
-                        </div>
-                        <span class="material-symbols-outlined text-sm menu-arrow">expand_more</span>
-                    </button>
-                    <div id="itemsMenu" class="hidden ml-5 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-4">
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{% url 'item-list' %}">
-                            <span class="material-symbols-outlined text-lg">list</span>
-                            <span>Item List</span>
-                        </a>
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
-                            <span class="material-symbols-outlined text-lg">add_box</span>
-                            <span>Add Item</span>
-                        </a>
-                    </div>
+                    <!-- Items -->
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="{% url 'item-list' %}">
+                        <span class="material-symbols-outlined text-xl">inventory_2</span>
+                        <span class="text-sm">Items</span>
+                    </a>
                 </div>
 
                 <!-- Operations -->
                 <div class="pt-4 pb-1">
                     <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Operations</p>
 
-                    <button class="menu-toggle w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" type="button" data-target="issuanceMenu" aria-expanded="false">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl">handshake</span>
-                            <span class="text-sm">Issuance</span>
-                        </div>
-                        <span class="material-symbols-outlined text-sm menu-arrow">expand_more</span>
-                    </button>
-                    <div id="issuanceMenu" class="hidden ml-5 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-4">
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{% url 'issuance-list' %}">
-                            <span class="material-symbols-outlined text-lg">list</span>
-                            <span>Issuance List</span>
-                        </a>
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
-                            <span class="material-symbols-outlined text-lg">north_east</span>
-                            <span>Add Issuance</span>
-                        </a>
-                    </div>
+                    <!-- Issuance -->
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="{% url 'issuance-list' %}">
+                        <span class="material-symbols-outlined text-xl">handshake</span>
+                        <span class="text-sm">Issuance</span>
+                    </a>
 
-                    <button class="menu-toggle mt-1 w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" type="button" data-target="returnsMenu" aria-expanded="false">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl">assignment_return</span>
-                            <span class="text-sm">Returns</span>
-                        </div>
-                        <span class="material-symbols-outlined text-sm menu-arrow">expand_more</span>
-                    </button>
-                    <div id="returnsMenu" class="hidden ml-5 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-4">
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="{% url 'return-list' %}">
-                            <span class="material-symbols-outlined text-lg">list</span>
-                            <span>Return List</span>
-                        </a>
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
-                            <span class="material-symbols-outlined text-lg">south_west</span>
-                            <span>Add Return</span>
-                        </a>
-                    </div>
+                    <!-- Returns -->
+                    <a class="mt-1 flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="{% url 'return-list' %}">
+                        <span class="material-symbols-outlined text-xl">assignment_return</span>
+                        <span class="text-sm">Returns</span>
+                    </a>
                 </div>
 
                 <!-- Settings -->
                 <div class="pt-4 pb-1">
                     <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Settings</p>
 
-                    <button class="menu-toggle w-full flex items-center justify-between px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" type="button" data-target="settingsMenu" aria-expanded="false">
-                        <div class="flex items-center gap-3">
-                            <span class="material-symbols-outlined text-xl">settings</span>
-                            <span class="text-sm">System Settings</span>
-                        </div>
-                        <span class="material-symbols-outlined text-sm menu-arrow">expand_more</span>
-                    </button>
-                    <div id="settingsMenu" class="hidden ml-5 mt-1 space-y-1 border-l border-slate-200 dark:border-slate-700 pl-4">
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
-                            <span class="material-symbols-outlined text-lg">admin_panel_settings</span>
-                            <span>Role Management</span>
-                        </a>
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
-                            <span class="material-symbols-outlined text-lg">receipt_long</span>
-                            <span>Audit Logs</span>
-                        </a>
-                        <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
-                            <span class="material-symbols-outlined text-lg">analytics</span>
-                            <span>Reports</span>
-                        </a>
-                    </div>
+                    <!-- Settings -->
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="#">
+                        <span class="material-symbols-outlined text-xl">admin_panel_settings</span>
+                        <span class="text-sm">Role Management</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="#">
+                        <span class="material-symbols-outlined text-xl">receipt_long</span>
+                        <span class="text-sm">Audit Logs</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="#">
+                        <span class="material-symbols-outlined text-xl">analytics</span>
+                        <span class="text-sm">Reports</span>
+                    </a>
                 </div>
 
             </nav>
