@@ -4,11 +4,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ─── DOM Elements ─────────────────────────────────────────────────────────
 
-    const html             = document.documentElement;
-    const themeToggle      = document.getElementById("themeToggle");
-    const themeIcon        = document.getElementById("themeIcon");
-    const totalUsersCount  = document.getElementById("totalUsersCount");
-    const totalUsersChange = document.getElementById("totalUsersChange");
+    const html               = document.documentElement;
+    const themeToggle        = document.getElementById("themeToggle");
+    const themeIcon          = document.getElementById("themeIcon");
+    const totalStaffsCount   = document.getElementById("totalStaffsCount");
+    const totalPatientsCount = document.getElementById("totalPatientsCount");
+    const totalItemsCount    = document.getElementById("totalItemsCount");
+    const totalIssuanceCount = document.getElementById("totalIssuanceCount");
+    const totalReturnCount   = document.getElementById("totalReturnCount");
 
     // ─── Theme ────────────────────────────────────────────────────────────────
 
@@ -26,13 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         themeToggle.addEventListener("click", function () {
             html.classList.toggle("dark");
             html.classList.toggle("light");
-
-            if (html.classList.contains("dark")) {
-                localStorage.setItem("theme", "dark");
-            } else {
-                localStorage.setItem("theme", "light");
-            }
-
+            localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
             updateThemeIcon();
         });
     }
@@ -65,45 +62,45 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ─── Dashboard Totals ─────────────────────────────────────────────────────
 
-    async function loadTotalUsers() {
+    async function loadDashboardTotals() {
         try {
-            const [staffResponse, employeesResponse] = await Promise.all([
+            const [staffsResponse, patientsResponse, itemsResponse, issuanceResponse, returnResponse] = await Promise.all([
                 fetch(`${API_BASE_URL}/staffs/`),
-                fetch(`${API_BASE_URL}/employees/`)
+                fetch(`${API_BASE_URL}/patients/`),
+                fetch(`${API_BASE_URL}/items/`),
+                fetch(`${API_BASE_URL}/issuance/`),
+                fetch(`${API_BASE_URL}/return/`)
             ]);
 
-            if (!staffResponse.ok || !employeesResponse.ok) {
+            if (!staffsResponse.ok || !patientsResponse.ok || !itemsResponse.ok || !issuanceResponse.ok || !returnResponse.ok) {
                 throw new Error("Failed to fetch dashboard totals.");
             }
 
-            const staff     = await staffResponse.json();
-            const employees = await employeesResponse.json();
+            const staffs   = await staffsResponse.json();
+            const patients = await patientsResponse.json();
+            const items    = await itemsResponse.json();
+            const issuance = await issuanceResponse.json();
+            const returns  = await returnResponse.json();
 
-            const totalUsers = staff.length + employees.length;
-
-            if (totalUsersCount) {
-                totalUsersCount.textContent = totalUsers.toLocaleString();
-            }
-
-            if (totalUsersChange) {
-                totalUsersChange.textContent = "Live";
-            }
+            if (totalStaffsCount)   totalStaffsCount.textContent   = staffs.length.toLocaleString();
+            if (totalPatientsCount) totalPatientsCount.textContent = patients.length.toLocaleString();
+            if (totalItemsCount)    totalItemsCount.textContent    = items.length.toLocaleString();
+            if (totalIssuanceCount) totalIssuanceCount.textContent = issuance.length.toLocaleString();
+            if (totalReturnCount)   totalReturnCount.textContent   = returns.length.toLocaleString();
 
         } catch (error) {
-            console.error("Dashboard total users error:", error);
+            console.error("Dashboard totals error:", error);
 
-            if (totalUsersCount) {
-                totalUsersCount.textContent = "Error";
-            }
-
-            if (totalUsersChange) {
-                totalUsersChange.textContent = "--";
-            }
+            if (totalStaffsCount)   totalStaffsCount.textContent   = "Error";
+            if (totalPatientsCount) totalPatientsCount.textContent = "Error";
+            if (totalItemsCount)    totalItemsCount.textContent    = "Error";
+            if (totalIssuanceCount) totalIssuanceCount.textContent = "Error";
+            if (totalReturnCount)   totalReturnCount.textContent   = "Error";
         }
     }
 
     // ─── Init ─────────────────────────────────────────────────────────────────
 
-    loadTotalUsers();
+    loadDashboardTotals();
 
 });

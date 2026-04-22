@@ -24,25 +24,40 @@ from .views import (
 
 
 urlpatterns = [
-   path('roles/', RoleListAPIView.as_view()),
-   path('status/', StatusListAPIView.as_view()),
-   path('itemstatus/', ItemStatusListAPIView.as_view()),
-   path('itemtypes/', ItemTypeListAPIView.as_view()),
-   path('staffs/', StaffListCreateAPIView.as_view()),
-   path('staffs/<int:pk>/', StaffRetrieveUpdateAPIView.as_view(), name='staffdetail-update'),
-   path('staffs/<int:pk>/delete/', StaffDeleteAPIView.as_view(), name='staffdelete'),
-   path('patients/', PatientListCreateAPIView.as_view()),
-   path('patients/<int:pk>/', PatientRetrieveUpdateAPIView.as_view(), name='patientdetail-update'),
-   path('patients/<int:pk>/delete/', PatientDeleteAPIView.as_view(), name='patientdelete'),
-   path('items/', ItemListCreateAPIView.as_view()),
-   path('items/<int:pk>/', ItemRetrieveUpdateAPIView.as_view(), name='itemdetail-update'),
-   path('items/<int:pk>/delete/', ItemDeleteAPIView.as_view(), name='itemdelete'),
-   path('issuance/', IssuanceListCreateAPIView.as_view()),
-   path('issuance/<int:pk>/', IssuanceRetrieveUpdateAPIView.as_view(), name='issuancedetail-update'),
-   path('issuance/<int:pk>/delete/', IssuanceDeleteAPIView.as_view(), name='issuancedelete'),
-   path('return/', ReturnListCreateAPIView.as_view()),
-   path('return/<int:pk>/', ReturnRetrieveUpdateAPIView.as_view(), name='returndetail-update'),
-   path('return/<int:pk>/delete/', ReturnDeleteAPIView.as_view(), name='returndelete'),
-   path('', views.index, name='index'),
-]
 
+    # ─── API Endpoints ────────────────────────────────────────────────────────
+
+    path('roles/', RoleListAPIView.as_view()),
+    path('status/', StatusListAPIView.as_view()),
+    path('itemstatus/', ItemStatusListAPIView.as_view()),
+    path('itemtypes/', ItemTypeListAPIView.as_view()),
+
+    path('staffs/', StaffListCreateAPIView.as_view()),
+    path('staffs/<int:pk>/', StaffRetrieveUpdateAPIView.as_view(), name='staffdetail-update'),
+    path('staffs/<int:pk>/delete/', StaffDeleteAPIView.as_view(), name='staffdelete'),
+
+    path('patients/', PatientListCreateAPIView.as_view()),
+    path('patients/<int:pk>/', PatientRetrieveUpdateAPIView.as_view(), name='patientdetail-update'),
+    path('patients/<int:pk>/delete/', PatientDeleteAPIView.as_view(), name='patientdelete'),
+
+    path('items/', ItemListCreateAPIView.as_view()),
+    path('items/<int:pk>/', ItemRetrieveUpdateAPIView.as_view(), name='itemdetail-update'),
+    path('items/<int:pk>/delete/', ItemDeleteAPIView.as_view(), name='itemdelete'),
+
+    path('issuance/', IssuanceListCreateAPIView.as_view()),
+    path('issuance/<int:pk>/', IssuanceRetrieveUpdateAPIView.as_view(), name='issuancedetail-update'),
+    path('issuance/<int:pk>/delete/', IssuanceDeleteAPIView.as_view(), name='issuancedelete'),
+
+    path('return/', ReturnListCreateAPIView.as_view()),
+    path('return/<int:pk>/', ReturnRetrieveUpdateAPIView.as_view(), name='returndetail-update'),
+    path('return/<int:pk>/delete/', ReturnDeleteAPIView.as_view(), name='returndelete'),
+
+    # ─── Page Views ───────────────────────────────────────────────────────────
+
+    path('', views.index, name='index'),
+    path('staffs/list/', views.staff_list, name='staff-list'),
+    path('patients/list/', views.patient_list, name='patient-list'),
+    path('items/list/', views.item_list, name='item-list'),
+    path('issuance/list/', views.issuance_list, name='issuance-list'),
+    path('return/list/', views.return_list, name='return-list'),
+]

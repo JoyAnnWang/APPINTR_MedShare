@@ -15,13 +15,9 @@ from .serializers import (
 )
 
 
-
-
 class RoleListAPIView(generics.ListAPIView):
    queryset = Role.objects.all().order_by('id')
    serializer_class = RoleSerializer
-
-
 
 
 class StatusListAPIView(generics.ListAPIView):
@@ -29,13 +25,9 @@ class StatusListAPIView(generics.ListAPIView):
    serializer_class = StatusSerializer
 
 
-
-
 class ItemStatusListAPIView(generics.ListAPIView):
    queryset = ItemStatus.objects.all().order_by('id')
    serializer_class = ItemStatusSerializer
-
-
 
 
 class ItemTypeListAPIView(generics.ListAPIView):
@@ -44,9 +36,7 @@ class ItemTypeListAPIView(generics.ListAPIView):
 
 
 class StaffListCreateAPIView(generics.ListCreateAPIView):
-   queryset = Staff.objects.select_related(
-      'role',
-   ).all().order_by('last_name', 'first_name')
+   queryset = Staff.objects.select_related('role').all().order_by('last_name', 'first_name')
    serializer_class = StaffSerializer
    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
@@ -55,9 +45,7 @@ class StaffListCreateAPIView(generics.ListCreateAPIView):
 
 
 class StaffRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
-   queryset = Staff.objects.select_related(
-      'role',
-   ).all()
+   queryset = Staff.objects.select_related('role').all()
    serializer_class = StaffSerializer
    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
@@ -65,25 +53,23 @@ class StaffRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
       instance = serializer.save()
       instance.refresh_from_db()
 
+
 class StaffDeleteAPIView(generics.DestroyAPIView):
- queryset = Staff.objects.all()
- serializer_class = StaffSerializer
+   queryset = Staff.objects.all()
+   serializer_class = StaffSerializer
+
 
 class PatientListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Patient.objects.select_related(
-       'status',
-    ).all().order_by('last_name', 'first_name')
-    serializer_class = PatientSerializer
-    parser_classes = [MultiPartParser, FormParser, JSONParser]
+   queryset = Patient.objects.select_related('status').all().order_by('last_name', 'first_name')
+   serializer_class = PatientSerializer
+   parser_classes = [MultiPartParser, FormParser, JSONParser]
 
-    def perform_create(self, serializer):
-       serializer.save()
+   def perform_create(self, serializer):
+      serializer.save()
 
 
 class PatientRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
-   queryset = Patient.objects.select_related(
-      'status',
-   ).all()
+   queryset = Patient.objects.select_related('status').all()
    serializer_class = PatientSerializer
    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
@@ -98,10 +84,7 @@ class PatientDeleteAPIView(generics.DestroyAPIView):
 
 
 class ItemListCreateAPIView(generics.ListCreateAPIView):
-   queryset = Item.objects.select_related(
-      'item_type',
-      'status',
-   ).all().order_by('item_name')
+   queryset = Item.objects.select_related('item_type', 'status').all().order_by('item_name')
    serializer_class = ItemSerializer
    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
@@ -110,10 +93,7 @@ class ItemListCreateAPIView(generics.ListCreateAPIView):
 
 
 class ItemRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
-   queryset = Item.objects.select_related(
-      'item_type',
-      'status',
-   ).all()
+   queryset = Item.objects.select_related('item_type', 'status').all()
    serializer_class = ItemSerializer
    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
@@ -128,10 +108,7 @@ class ItemDeleteAPIView(generics.DestroyAPIView):
 
 
 class IssuanceListCreateAPIView(generics.ListCreateAPIView):
-   queryset = Issuance.objects.select_related(
-      'item',
-      'patient',
-   ).all().order_by('-created_at')
+   queryset = Issuance.objects.select_related('item', 'patient').all().order_by('-created_at')
    serializer_class = IssuanceSerializer
    parser_classes = [JSONParser]
 
@@ -140,10 +117,7 @@ class IssuanceListCreateAPIView(generics.ListCreateAPIView):
 
 
 class IssuanceRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
-   queryset = Issuance.objects.select_related(
-      'item',
-      'patient',
-   ).all()
+   queryset = Issuance.objects.select_related('item', 'patient').all()
    serializer_class = IssuanceSerializer
    parser_classes = [JSONParser]
 
@@ -158,10 +132,7 @@ class IssuanceDeleteAPIView(generics.DestroyAPIView):
 
 
 class ReturnListCreateAPIView(generics.ListCreateAPIView):
-   queryset = Return.objects.select_related(
-      'item',
-      'patient',
-   ).all().order_by('-created_at')
+   queryset = Return.objects.select_related('item', 'patient').all().order_by('-created_at')
    serializer_class = ReturnSerializer
    parser_classes = [JSONParser]
 
@@ -170,10 +141,7 @@ class ReturnListCreateAPIView(generics.ListCreateAPIView):
 
 
 class ReturnRetrieveUpdateAPIView(generics.RetrieveUpdateAPIView):
-   queryset = Return.objects.select_related(
-      'item',
-      'patient',
-   ).all()
+   queryset = Return.objects.select_related('item', 'patient').all()
    serializer_class = ReturnSerializer
    parser_classes = [JSONParser]
 
@@ -186,8 +154,23 @@ class ReturnDeleteAPIView(generics.DestroyAPIView):
    queryset = Return.objects.all()
    serializer_class = ReturnSerializer
 
+
+# ─── Page Views ───────────────────────────────────────────────────────────────
+
 def index(request):
    return render(request, "admindashboard.html")
 
+def staff_list(request):
+   return render(request, "staff.html")
 
+def patient_list(request):
+   return render(request, "patient.html")
 
+def item_list(request):
+   return render(request, "item.html")
+
+def issuance_list(request):
+   return render(request, "Issuance.html")
+
+def return_list(request):
+   return render(request, "return.html")
