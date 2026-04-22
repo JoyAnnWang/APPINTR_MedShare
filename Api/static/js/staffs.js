@@ -5,6 +5,8 @@ let allRoles = [];
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    // ─── DOM Elements ─────────────────────────────────────────────────────────
+
     const staffTableBody   = document.getElementById("staffTableBody");
     const staffSummary     = document.getElementById("staffSummary");
     const staffSearch      = document.getElementById("staffSearch");
@@ -57,16 +59,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const editPhone           = document.getElementById("edit_phone");
     const editPhoto           = document.getElementById("edit_photo");
 
-    const deleteStaffModal          = document.getElementById("deleteStaffModal");
-    const closeDeleteStaffModal     = document.getElementById("closeDeleteStaffModal");
-    const cancelDeleteStaff         = document.getElementById("cancelDeleteStaff");
-    const confirmDeleteStaffButton  = document.getElementById("confirmDeleteStaffButton");
-    const deleteStaffId             = document.getElementById("delete_staff_id");
-    const deleteStaffName           = document.getElementById("deleteStaffName");
-    const deleteStaffIdDisplay      = document.getElementById("deleteStaffIdDisplay");
-    const deleteStaffMessage        = document.getElementById("deleteStaffMessage");
+    const deleteStaffModal         = document.getElementById("deleteStaffModal");
+    const closeDeleteStaffModal    = document.getElementById("closeDeleteStaffModal");
+    const cancelDeleteStaff        = document.getElementById("cancelDeleteStaff");
+    const confirmDeleteStaffButton = document.getElementById("confirmDeleteStaffButton");
+    const deleteStaffId            = document.getElementById("delete_staff_id");
+    const deleteStaffName          = document.getElementById("deleteStaffName");
+    const deleteStaffIdDisplay     = document.getElementById("deleteStaffIdDisplay");
+    const deleteStaffMessage       = document.getElementById("deleteStaffMessage");
 
-    // ─── Helpers ─────────────────────────────────────────────────────────────
+    // ─── Helpers ──────────────────────────────────────────────────────────────
 
     function getInitials(firstName = "", lastName = "") {
         const first = firstName.charAt(0).toUpperCase();
@@ -75,12 +77,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function getGenderBadge(gender) {
-        if (gender === "Male") {
-            return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
-        }
-        if (gender === "Female") {
-            return "bg-pink-100 text-pink-800 dark:bg-pink-900/30 dark:text-pink-300";
-        }
+        if (gender === "Male")   return "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300";
+        if (gender === "Female") return "bg-pink-100 text-pink-800 dark:bg-pink-900/30 dark:text-pink-300";
         return "bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-300";
     }
 
@@ -100,72 +98,120 @@ document.addEventListener("DOMContentLoaded", () => {
         container.textContent = "";
     }
 
-    // ─── Add Modal ────────────────────────────────────────────────────────────
-
-    function openModal() {
-        addStaffModal.classList.remove("hidden");
-        addStaffModal.classList.add("flex");
-        document.body.classList.add("overflow-hidden");
-        clearFormMessage(addStaffMessage);
+    function showTableError(message) {
+        staffTableBody.innerHTML = `
+            <tr>
+                <td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">
+                    ${message}
+                </td>
+            </tr>
+        `;
+        staffSummary.innerHTML = `Showing <span class="font-semibold">0</span> staff`;
     }
 
-    function closeModal() {
-        addStaffModal.classList.add("hidden");
-        addStaffModal.classList.remove("flex");
+    // ─── Sidebar Menu Toggles ─────────────────────────────────────────────────
+    // NOTE: admindashboard.js also binds these — this block handles them
+    // specifically for pages that DON'T load admindashboard.js.
+    // If admindashboard.js is already loaded, this is safely redundant.
+
+    document.querySelectorAll(".menu-toggle").forEach(button => {
+        button.addEventListener("click", () => {
+            const targetId   = button.getAttribute("data-target");
+            const targetMenu = document.getElementById(targetId);
+            const arrow      = button.querySelector(".menu-arrow");
+            if (!targetMenu) return;
+            const isHidden = targetMenu.classList.contains("hidden");
+            if (isHidden) {
+                targetMenu.classList.remove("hidden");
+                button.setAttribute("aria-expanded", "true");
+                if (arrow) arrow.textContent = "expand_less";
+            } else {
+                targetMenu.classList.add("hidden");
+                button.setAttribute("aria-expanded", "false");
+                if (arrow) arrow.textContent = "expand_more";
+            }
+        });
+    });
+
+    // ─── Theme Toggle ─────────────────────────────────────────────────────────
+
+    const html        = document.documentElement;
+    const themeToggle = document.getElementById("themeToggle");
+    const themeIcon   = document.getElementById("themeIcon");
+
+    function updateThemeIcon() {
+        if (themeIcon) {
+            themeIcon.textContent = html.classList.contains("dark") ? "light_mode" : "dark_mode";
+        }
+    }
+
+    updateThemeIcon();
+
+    if (themeToggle) {
+        themeToggle.addEventListener("click", () => {
+            html.classList.toggle("dark");
+            html.classList.toggle("light");
+            localStorage.setItem("theme", html.classList.contains("dark") ? "dark" : "light");
+            updateThemeIcon();
+        });
+    }
+
+    // ─── Modal Helpers ────────────────────────────────────────────────────────
+
+    function openModal(modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        document.body.classList.add("overflow-hidden");
+    }
+
+    function closeModal(modal, form = null, msgEl = null) {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
         document.body.classList.remove("overflow-hidden");
-        addStaffForm.reset();
+        if (form)  form.reset();
+        if (msgEl) clearFormMessage(msgEl);
+    }
+
+    // ─── Add Modal ────────────────────────────────────────────────────────────
+
+    function openAddModal() {
         clearFormMessage(addStaffMessage);
-        resetRoleDropdown();
+        openModal(addStaffModal);
+    }
+
+    function closeAddModal() {
+        closeModal(addStaffModal, addStaffForm, addStaffMessage);
+        modalRole.value = "";
     }
 
     // ─── View Modal ───────────────────────────────────────────────────────────
 
-    function openViewModal() {
-        viewStaffModal.classList.remove("hidden");
-        viewStaffModal.classList.add("flex");
-        document.body.classList.add("overflow-hidden");
-    }
-
-    function closeViewModal() {
-        viewStaffModal.classList.add("hidden");
-        viewStaffModal.classList.remove("flex");
-        document.body.classList.remove("overflow-hidden");
-    }
+    function openViewModal()  { openModal(viewStaffModal); }
+    function closeViewModal() { closeModal(viewStaffModal); }
 
     // ─── Edit Modal ───────────────────────────────────────────────────────────
 
-    function openEditModal() {
-        editStaffModal.classList.remove("hidden");
-        editStaffModal.classList.add("flex");
-        document.body.classList.add("overflow-hidden");
+    function openEditModal()  {
         clearFormMessage(editStaffMessage);
+        openModal(editStaffModal);
     }
 
     function closeEditModal() {
-        editStaffModal.classList.add("hidden");
-        editStaffModal.classList.remove("flex");
-        document.body.classList.remove("overflow-hidden");
-        editStaffForm.reset();
-        clearFormMessage(editStaffMessage);
+        closeModal(editStaffModal, editStaffForm, editStaffMessage);
     }
 
     // ─── Delete Modal ─────────────────────────────────────────────────────────
 
-    function openDeleteModal() {
-        deleteStaffModal.classList.remove("hidden");
-        deleteStaffModal.classList.add("flex");
-        document.body.classList.add("overflow-hidden");
+    function openDeleteModal()  {
         clearFormMessage(deleteStaffMessage);
+        openModal(deleteStaffModal);
     }
 
     function closeDeleteModal() {
-        deleteStaffModal.classList.add("hidden");
-        deleteStaffModal.classList.remove("flex");
-        document.body.classList.remove("overflow-hidden");
-        deleteStaffId.value = "";
+        closeModal(deleteStaffModal, null, deleteStaffMessage);
+        deleteStaffId.value              = "";
         deleteStaffName.textContent      = "-";
         deleteStaffIdDisplay.textContent = "-";
-        clearFormMessage(deleteStaffMessage);
     }
 
     // ─── Filters ──────────────────────────────────────────────────────────────
@@ -177,26 +223,18 @@ document.addEventListener("DOMContentLoaded", () => {
         departmentFilter.innerHTML = `<option value="">All Departments</option>`;
         roleFilter.innerHTML       = `<option value="">All Roles</option>`;
 
-        departments.forEach(department => {
-            departmentFilter.innerHTML += `<option value="${department}">${department}</option>`;
+        departments.forEach(d => {
+            departmentFilter.innerHTML += `<option value="${d}">${d}</option>`;
         });
-
-        roles.forEach(role => {
-            roleFilter.innerHTML += `<option value="${role}">${role}</option>`;
+        roles.forEach(r => {
+            roleFilter.innerHTML += `<option value="${r}">${r}</option>`;
         });
     }
 
     function populateModalRoles() {
-        modalRole.innerHTML     = `<option value="">Select role</option>`;
-        editModalRole.innerHTML = `<option value="">Select role</option>`;
-        allRoles.forEach(role => {
-            modalRole.innerHTML     += `<option value="${role.id}">${role.role_name}</option>`;
-            editModalRole.innerHTML += `<option value="${role.id}">${role.role_name}</option>`;
-        });
-    }
-
-    function resetRoleDropdown() {
-        modalRole.value = "";
+        const options = allRoles.map(r => `<option value="${r.id}">${r.role_name}</option>`).join("");
+        modalRole.innerHTML     = `<option value="">Select role</option>${options}`;
+        editModalRole.innerHTML = `<option value="">Select role</option>${options}`;
     }
 
     function applyFilters() {
@@ -209,12 +247,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const fullName = `${s.last_name} ${s.first_name} ${s.middle_initial ?? ""}`.toLowerCase();
             const staffId  = (s.staff_id ?? "").toLowerCase();
 
-            const matchesSearch     = fullName.includes(searchValue) || staffId.includes(searchValue);
-            const matchesDepartment = !selectedDepartment || s.department === selectedDepartment;
-            const matchesGender     = !selectedGender     || s.gender     === selectedGender;
-            const matchesRole       = !selectedRole       || s.role_name  === selectedRole;
-
-            return matchesSearch && matchesDepartment && matchesGender && matchesRole;
+            return (
+                (fullName.includes(searchValue) || staffId.includes(searchValue)) &&
+                (!selectedDepartment || s.department === selectedDepartment)       &&
+                (!selectedGender     || s.gender     === selectedGender)           &&
+                (!selectedRole       || s.role_name  === selectedRole)
+            );
         });
 
         renderStaff(filtered);
@@ -223,7 +261,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ─── Render ───────────────────────────────────────────────────────────────
 
     function renderStaff(staff) {
-        if (!staff.length) {
+        if (!Array.isArray(staff) || !staff.length) {
             staffTableBody.innerHTML = `
                 <tr>
                     <td colspan="5" class="px-6 py-10 text-center text-sm text-slate-500">
@@ -270,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     </td>
                     <td class="px-6 py-4">
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGenderBadge(s.gender)}">
-                            ${s.gender}
+                            ${s.gender ?? "-"}
                         </span>
                     </td>
                     <td class="px-6 py-4 text-right">
@@ -301,37 +339,33 @@ document.addEventListener("DOMContentLoaded", () => {
     function fillViewModal(s) {
         const fullName = `${s.last_name}, ${s.first_name}${s.middle_initial ? ` ${s.middle_initial}.` : ""}`;
 
-        viewFullName.textContent        = fullName;
-        viewStaffId.textContent         = `Staff ID: ${s.staff_id ?? "-"}`;
-        viewFirstName.textContent       = s.first_name      ?? "-";
-        viewLastName.textContent        = s.last_name       ?? "-";
-        viewMiddleInitial.textContent   = s.middle_initial  ?? "-";
-        viewGenderText.textContent      = s.gender          ?? "-";
-        viewDepartment.textContent      = s.department      ?? "-";
-        viewRoleText.textContent        = s.role_name       ?? "-";
-        viewEmail.textContent           = s.email           ?? "-";
-        viewPhone.textContent           = s.phone           ?? "-";
+        viewFullName.textContent      = fullName;
+        viewStaffId.textContent       = `Staff ID: ${s.staff_id ?? "-"}`;
+        viewFirstName.textContent     = s.first_name     ?? "-";
+        viewLastName.textContent      = s.last_name      ?? "-";
+        viewMiddleInitial.textContent = s.middle_initial ?? "-";
+        viewGenderText.textContent    = s.gender         ?? "-";
+        viewDepartment.textContent    = s.department     ?? "-";
+        viewRoleText.textContent      = s.role_name      ?? "-";
+        viewEmail.textContent         = s.email          ?? "-";
+        viewPhone.textContent         = s.phone          ?? "-";
 
         viewGenderBadge.className   = `inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${getGenderBadge(s.gender)}`;
-        viewGenderBadge.textContent = s.gender ?? "-";
-
+        viewGenderBadge.textContent = s.gender   ?? "-";
         viewRoleBadge.className     = "inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary";
         viewRoleBadge.textContent   = s.role_name ?? "-";
 
-        if (s.photo) {
-            viewStaffPhotoWrapper.innerHTML = `<img src="${s.photo}" alt="${s.first_name} ${s.last_name}" class="h-full w-full object-cover" />`;
-        } else {
-            viewStaffPhotoWrapper.innerHTML = getInitials(s.first_name, s.last_name);
-        }
+        viewStaffPhotoWrapper.innerHTML = s.photo
+            ? `<img src="${s.photo}" alt="${s.first_name} ${s.last_name}" class="h-full w-full object-cover" />`
+            : getInitials(s.first_name, s.last_name);
     }
 
     function bindViewButtons() {
-        document.querySelectorAll(".view-staff-btn").forEach(button => {
-            button.addEventListener("click", () => {
-                const staffId       = Number(button.getAttribute("data-staff-id"));
-                const selectedStaff = allStaff.find(s => s.id === staffId);
-                if (!selectedStaff) return;
-                fillViewModal(selectedStaff);
+        document.querySelectorAll(".view-staff-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const s = allStaff.find(x => x.id === Number(btn.dataset.staffId));
+                if (!s) return;
+                fillViewModal(s);
                 openViewModal();
             });
         });
@@ -353,12 +387,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function bindEditButtons() {
-        document.querySelectorAll(".edit-staff-btn").forEach(button => {
-            button.addEventListener("click", () => {
-                const staffId       = Number(button.getAttribute("data-staff-id"));
-                const selectedStaff = allStaff.find(s => s.id === staffId);
-                if (!selectedStaff) return;
-                fillEditModal(selectedStaff);
+        document.querySelectorAll(".edit-staff-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const s = allStaff.find(x => x.id === Number(btn.dataset.staffId));
+                if (!s) return;
+                fillEditModal(s);
                 openEditModal();
             });
         });
@@ -373,12 +406,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function bindDeleteButtons() {
-        document.querySelectorAll(".delete-staff-btn").forEach(button => {
-            button.addEventListener("click", () => {
-                const staffId       = Number(button.getAttribute("data-staff-id"));
-                const selectedStaff = allStaff.find(s => s.id === staffId);
-                if (!selectedStaff) return;
-                fillDeleteModal(selectedStaff);
+        document.querySelectorAll(".delete-staff-btn").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const s = allStaff.find(x => x.id === Number(btn.dataset.staffId));
+                if (!s) return;
+                fillDeleteModal(s);
                 openDeleteModal();
             });
         });
@@ -387,37 +419,51 @@ document.addEventListener("DOMContentLoaded", () => {
     // ─── Data Fetching ────────────────────────────────────────────────────────
 
     async function loadStaff() {
+        // Show loading state
+        staffTableBody.innerHTML = `
+            <tr>
+                <td colspan="5" class="px-6 py-10 text-center text-sm text-slate-500">Loading staff...</td>
+            </tr>
+        `;
+
         try {
             const response = await fetch(`${API_BASE_URL}/staffs/`);
+
             if (!response.ok) {
-                throw new Error(`Failed to fetch staff: ${response.status}`);
+                throw new Error(`Server returned ${response.status} ${response.statusText}`);
             }
-            allStaff = await response.json();
+
+            const data = await response.json();
+
+            // Handle both array responses and paginated {results: [...]} responses
+            allStaff = Array.isArray(data) ? data : (data.results ?? []);
+
+            console.log(`Loaded ${allStaff.length} staff records.`);
+
             populateFilters(allStaff);
             renderStaff(allStaff);
+
         } catch (error) {
-            console.error("Staff error:", error);
-            staffTableBody.innerHTML = `
-                <tr>
-                    <td colspan="5" class="px-6 py-10 text-center text-sm text-red-500">
-                        Failed to load staff.
-                    </td>
-                </tr>
-            `;
-            staffSummary.innerHTML = `Showing <span class="font-semibold">0</span> staff`;
+            console.error("Staff fetch error:", error);
+            showTableError(`Failed to load staff: ${error.message}`);
         }
     }
 
     async function loadRoleData() {
         try {
             const response = await fetch(`${API_BASE_URL}/roles/`);
+
             if (!response.ok) {
-                throw new Error("Failed to load role dropdown data.");
+                throw new Error(`Server returned ${response.status}`);
             }
-            allRoles = await response.json();
+
+            const data = await response.json();
+            allRoles   = Array.isArray(data) ? data : (data.results ?? []);
+
             populateModalRoles();
+
         } catch (error) {
-            console.error("Role dropdown error:", error);
+            console.error("Role fetch error:", error);
             modalRole.innerHTML     = `<option value="">Failed to load roles</option>`;
             editModalRole.innerHTML = `<option value="">Failed to load roles</option>`;
         }
@@ -432,26 +478,20 @@ document.addEventListener("DOMContentLoaded", () => {
         saveStaffButton.textContent = "Saving...";
 
         try {
-            const formData = new FormData(addStaffForm);
             const response = await fetch(`${API_BASE_URL}/staffs/`, {
                 method: "POST",
-                body:   formData
+                body:   new FormData(addStaffForm),
             });
 
             if (!response.ok) {
-                let errorMessage = "Failed to save staff.";
-                try {
-                    const errorData = await response.json();
-                    errorMessage = JSON.stringify(errorData);
-                } catch {
-                    errorMessage = `Failed to save staff. Status: ${response.status}`;
-                }
-                throw new Error(errorMessage);
+                let msg = `Failed to save staff (${response.status}).`;
+                try   { msg = JSON.stringify(await response.json()); } catch {}
+                throw new Error(msg);
             }
 
             showFormMessage(addStaffMessage, "Staff added successfully.", "success");
             await loadStaff();
-            setTimeout(() => { closeModal(); }, 800);
+            setTimeout(() => closeAddModal(), 800);
 
         } catch (error) {
             console.error("Add staff error:", error);
@@ -469,32 +509,23 @@ document.addEventListener("DOMContentLoaded", () => {
         updateStaffButton.textContent = "Updating...";
 
         try {
-            const staffId  = editStaffId.value;
             const formData = new FormData(editStaffForm);
+            if (!editPhoto.files.length) formData.delete("photo");
 
-            if (!editPhoto.files.length) {
-                formData.delete("photo");
-            }
-
-            const response = await fetch(`${API_BASE_URL}/staffs/${staffId}/`, {
+            const response = await fetch(`${API_BASE_URL}/staffs/${editStaffId.value}/`, {
                 method: "PATCH",
-                body:   formData
+                body:   formData,
             });
 
             if (!response.ok) {
-                let errorMessage = "Failed to update staff.";
-                try {
-                    const errorData = await response.json();
-                    errorMessage = JSON.stringify(errorData);
-                } catch {
-                    errorMessage = `Failed to update staff. Status: ${response.status}`;
-                }
-                throw new Error(errorMessage);
+                let msg = `Failed to update staff (${response.status}).`;
+                try   { msg = JSON.stringify(await response.json()); } catch {}
+                throw new Error(msg);
             }
 
             showFormMessage(editStaffMessage, "Staff updated successfully.", "success");
             await loadStaff();
-            setTimeout(() => { closeEditModal(); }, 800);
+            setTimeout(() => closeEditModal(), 800);
 
         } catch (error) {
             console.error("Edit staff error:", error);
@@ -511,25 +542,19 @@ document.addEventListener("DOMContentLoaded", () => {
         confirmDeleteStaffButton.textContent = "Deleting...";
 
         try {
-            const staffId  = deleteStaffId.value;
-            const response = await fetch(`${API_BASE_URL}/staffs/${staffId}/delete/`, {
-                method: "DELETE"
+            const response = await fetch(`${API_BASE_URL}/staffs/${deleteStaffId.value}/delete/`, {
+                method: "DELETE",
             });
 
             if (!response.ok) {
-                let errorMessage = "Failed to delete staff.";
-                try {
-                    const errorData = await response.json();
-                    errorMessage = JSON.stringify(errorData);
-                } catch {
-                    errorMessage = `Failed to delete staff. Status: ${response.status}`;
-                }
-                throw new Error(errorMessage);
+                let msg = `Failed to delete staff (${response.status}).`;
+                try   { msg = JSON.stringify(await response.json()); } catch {}
+                throw new Error(msg);
             }
 
             showFormMessage(deleteStaffMessage, "Staff deleted successfully.", "success");
             await loadStaff();
-            setTimeout(() => { closeDeleteModal(); }, 800);
+            setTimeout(() => closeDeleteModal(), 800);
 
         } catch (error) {
             console.error("Delete staff error:", error);
@@ -542,10 +567,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ─── Event Listeners ──────────────────────────────────────────────────────
 
-    staffSearch.addEventListener("input", applyFilters);
+    staffSearch.addEventListener("input",  applyFilters);
     departmentFilter.addEventListener("change", applyFilters);
-    genderFilter.addEventListener("change", applyFilters);
-    roleFilter.addEventListener("change", applyFilters);
+    genderFilter.addEventListener("change",     applyFilters);
+    roleFilter.addEventListener("change",       applyFilters);
 
     resetFilters.addEventListener("click", () => {
         staffSearch.value      = "";
@@ -555,33 +580,25 @@ document.addEventListener("DOMContentLoaded", () => {
         renderStaff(allStaff);
     });
 
-    openAddStaffModal.addEventListener("click", openModal);
-    closeAddStaffModal.addEventListener("click", closeModal);
-    cancelAddStaff.addEventListener("click", closeModal);
-    addStaffModal.addEventListener("click", (event) => {
-        if (event.target === addStaffModal) closeModal();
-    });
+    openAddStaffModal.addEventListener("click",  openAddModal);
+    closeAddStaffModal.addEventListener("click", closeAddModal);
+    cancelAddStaff.addEventListener("click",     closeAddModal);
+    addStaffModal.addEventListener("click", e => { if (e.target === addStaffModal) closeAddModal(); });
 
     closeViewStaffModal.addEventListener("click", closeViewModal);
     viewStaffDoneButton.addEventListener("click", closeViewModal);
-    viewStaffModal.addEventListener("click", (event) => {
-        if (event.target === viewStaffModal) closeViewModal();
-    });
+    viewStaffModal.addEventListener("click", e => { if (e.target === viewStaffModal) closeViewModal(); });
 
     closeEditStaffModal.addEventListener("click", closeEditModal);
-    cancelEditStaff.addEventListener("click", closeEditModal);
-    editStaffModal.addEventListener("click", (event) => {
-        if (event.target === editStaffModal) closeEditModal();
-    });
+    cancelEditStaff.addEventListener("click",     closeEditModal);
+    editStaffModal.addEventListener("click", e => { if (e.target === editStaffModal) closeEditModal(); });
 
     closeDeleteStaffModal.addEventListener("click", closeDeleteModal);
-    cancelDeleteStaff.addEventListener("click", closeDeleteModal);
-    confirmDeleteStaffButton.addEventListener("click", confirmDeleteStaff);
-    deleteStaffModal.addEventListener("click", (event) => {
-        if (event.target === deleteStaffModal) closeDeleteModal();
-    });
+    cancelDeleteStaff.addEventListener("click",     closeDeleteModal);
+    deleteStaffModal.addEventListener("click", e => { if (e.target === deleteStaffModal) closeDeleteModal(); });
 
-    addStaffForm.addEventListener("submit", submitStaffForm);
+    confirmDeleteStaffButton.addEventListener("click", confirmDeleteStaff);
+    addStaffForm.addEventListener("submit",  submitStaffForm);
     editStaffForm.addEventListener("submit", submitEditStaffForm);
 
     // ─── Init ─────────────────────────────────────────────────────────────────
