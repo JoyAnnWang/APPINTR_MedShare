@@ -1,3 +1,18 @@
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + "=")) {
+                cookieValue = decodeURIComponent(cookie.slice(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 const API_BASE_URL = "http://127.0.0.1:8000/api";
 
 let allIssuances = [];
@@ -376,7 +391,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const response = await fetch(`${API_BASE_URL}/issuances/`, {
                 method:  "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "X-CSRFToken": getCookie("csrftoken") },
                 body:    JSON.stringify(payload)
             });
 
@@ -417,7 +432,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const response = await fetch(`${API_BASE_URL}/issuances/${pk}/`, {
                 method:  "PATCH",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "X-CSRFToken": getCookie("csrftoken") },
                 body:    JSON.stringify(payload)
             });
 
@@ -453,7 +468,8 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const pk       = deleteIssuancePk.value;
             const response = await fetch(`${API_BASE_URL}/issuances/${pk}/delete/`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: { "X-CSRFToken": getCookie("csrftoken") }
             });
 
             if (!response.ok) {

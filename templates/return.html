@@ -80,7 +80,7 @@
                     <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">People</p>
 
                     <!-- Staffs -->
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-semibold transition-colors" href="{% url 'staff-list' %}">
+                    <a class="mt-1 flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="{% url 'staff-list' %}">
                         <span class="material-symbols-outlined text-xl">badge</span>
                         <span class="text-sm">Staffs</span>
                     </a>
@@ -114,31 +114,11 @@
                     </a>
 
                     <!-- Returns -->
-                    <a class="mt-1 flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="{% url 'return-list' %}">
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-semibold transition-colors" href="{% url 'return-list' %}">
                         <span class="material-symbols-outlined text-xl">assignment_return</span>
                         <span class="text-sm">Returns</span>
                     </a>
                 </div>
-
-                <!-- Settings -->
-                <div class="pt-4 pb-1">
-                    <p class="px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Settings</p>
-
-                    <!-- Settings -->
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="#">
-                        <span class="material-symbols-outlined text-xl">admin_panel_settings</span>
-                        <span class="text-sm">Role Management</span>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="#">
-                        <span class="material-symbols-outlined text-xl">receipt_long</span>
-                        <span class="text-sm">Audit Logs</span>
-                    </a>
-                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors" href="#">
-                        <span class="material-symbols-outlined text-xl">analytics</span>
-                        <span class="text-sm">Reports</span>
-                    </a>
-                </div>
-
             </nav>
 
             <!-- Sidebar Footer -->
@@ -417,7 +397,6 @@
     </div>
 </div>
 
-    <script src="{% static 'js/admindashboard.js' %}"></script>
-    <script src="{% static 'js/return.js' %}"></script>
+    <script src="{% static 'js/returns.js' %}"></script>
 </body>
 </html>

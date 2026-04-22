@@ -1,3 +1,18 @@
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + "=")) {
+                cookieValue = decodeURIComponent(cookie.slice(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 const API_BASE_URL = "http://127.0.0.1:8000/api";
 
 let allPatients = [];
@@ -394,22 +409,14 @@ document.addEventListener("DOMContentLoaded", () => {
             </tr>
         `;
 
-        const timeoutId = setTimeout(() => {
-            patientTableBody.innerHTML = `
-                <tr>
-                    <td colspan="6" class="px-6 py-10 text-center text-sm text-red-500">
-                        Request timed out. Could not reach the server.
-                    </td>
-                </tr>
-            `;
-            patientSummary.innerHTML = `Showing <span class="font-semibold">0</span> patients`;
-        }, 8000);
+        const controller = new AbortController();
+        const timeoutId  = setTimeout(() => controller.abort(), 8000);
 
         try {
-            const response = await fetch(`${API_BASE_URL}/patients/`);
+            const response = await fetch(`${API_BASE_URL}/patients/`, { signal: controller.signal });
             clearTimeout(timeoutId);
             if (!response.ok) {
-                throw new Error(`Failed to fetch patients: ${response.status}`);
+                throw new Error(`Server returned ${response.status}: ${response.statusText}`);
             }
             allPatients = await response.json();
             populateFilters(allPatients);
@@ -417,10 +424,13 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
             clearTimeout(timeoutId);
             console.error("Patient error:", error);
+            const isTimeout = error.name === "AbortError";
             patientTableBody.innerHTML = `
                 <tr>
                     <td colspan="6" class="px-6 py-10 text-center text-sm text-red-500">
-                        Failed to load patients. Please check your connection and try again.
+                        ${isTimeout
+                            ? "Request timed out. Could not reach the server."
+                            : `Failed to load patients: ${error.message}`}
                     </td>
                 </tr>
             `;
@@ -455,6 +465,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(addPatientForm);
             const response = await fetch(`${API_BASE_URL}/patients/`, {
                 method: "POST",
+                headers: { "X-CSRFToken": getCookie("csrftoken") },
                 body:   formData
             });
 
@@ -498,6 +509,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const response = await fetch(`${API_BASE_URL}/patients/${patientId}/`, {
                 method: "PATCH",
+                headers: { "X-CSRFToken": getCookie("csrftoken") },
                 body:   formData
             });
 
@@ -533,7 +545,8 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const patientId = deletePatientId.value;
             const response  = await fetch(`${API_BASE_URL}/patients/${patientId}/delete/`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: { "X-CSRFToken": getCookie("csrftoken") }
             });
 
             if (!response.ok) {

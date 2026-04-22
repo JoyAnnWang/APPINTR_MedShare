@@ -1,5 +1,20 @@
 const API_BASE_URL = "http://127.0.0.1:8000/api";
 
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + "=")) {
+                cookieValue = decodeURIComponent(cookie.slice(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 let allStaff = [];
 let allRoles = [];
 
@@ -456,6 +471,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch(`${API_BASE_URL}/staffs/`, {
                 method: "POST",
+                headers: { "X-CSRFToken": getCookie("csrftoken") },
                 body:   new FormData(addStaffForm),
             });
 
@@ -490,6 +506,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const response = await fetch(`${API_BASE_URL}/staffs/${editStaffId.value}/`, {
                 method: "PATCH",
+                headers: { "X-CSRFToken": getCookie("csrftoken") },
                 body:   formData,
             });
 
@@ -520,6 +537,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch(`${API_BASE_URL}/staffs/${deleteStaffId.value}/delete/`, {
                 method: "DELETE",
+                headers: { "X-CSRFToken": getCookie("csrftoken") },
             });
 
             if (!response.ok) {

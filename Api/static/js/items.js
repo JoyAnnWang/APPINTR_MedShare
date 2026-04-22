@@ -1,3 +1,18 @@
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + "=")) {
+                cookieValue = decodeURIComponent(cookie.slice(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 const API_BASE_URL = "http://127.0.0.1:8000/api";
 
 let allItems    = [];
@@ -411,6 +426,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(addItemForm);
             const response = await fetch(`${API_BASE_URL}/items/`, {
                 method: "POST",
+                headers: { "X-CSRFToken": getCookie("csrftoken") },
                 body:   formData
             });
 
@@ -454,6 +470,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const response = await fetch(`${API_BASE_URL}/items/${itemPk}/`, {
                 method: "PATCH",
+                headers: { "X-CSRFToken": getCookie("csrftoken") },
                 body:   formData
             });
 
@@ -489,7 +506,8 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const itemPk   = deleteItemPk.value;
             const response = await fetch(`${API_BASE_URL}/items/${itemPk}/delete/`, {
-                method: "DELETE"
+                method: "DELETE",
+                headers: { "X-CSRFToken": getCookie("csrftoken") }
             });
 
             if (!response.ok) {
