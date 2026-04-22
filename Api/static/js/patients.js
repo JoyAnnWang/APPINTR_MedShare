@@ -388,8 +388,26 @@ document.addEventListener("DOMContentLoaded", () => {
     // ─── Data Fetching ────────────────────────────────────────────────────────
 
     async function loadPatients() {
+        patientTableBody.innerHTML = `
+            <tr>
+                <td colspan="6" class="px-6 py-10 text-center text-sm text-slate-500">Loading patients...</td>
+            </tr>
+        `;
+
+        const timeoutId = setTimeout(() => {
+            patientTableBody.innerHTML = `
+                <tr>
+                    <td colspan="6" class="px-6 py-10 text-center text-sm text-red-500">
+                        Request timed out. Could not reach the server.
+                    </td>
+                </tr>
+            `;
+            patientSummary.innerHTML = `Showing <span class="font-semibold">0</span> patients`;
+        }, 8000);
+
         try {
             const response = await fetch(`${API_BASE_URL}/patients/`);
+            clearTimeout(timeoutId);
             if (!response.ok) {
                 throw new Error(`Failed to fetch patients: ${response.status}`);
             }
@@ -397,11 +415,12 @@ document.addEventListener("DOMContentLoaded", () => {
             populateFilters(allPatients);
             renderPatients(allPatients);
         } catch (error) {
+            clearTimeout(timeoutId);
             console.error("Patient error:", error);
             patientTableBody.innerHTML = `
                 <tr>
                     <td colspan="6" class="px-6 py-10 text-center text-sm text-red-500">
-                        Failed to load patients.
+                        Failed to load patients. Please check your connection and try again.
                     </td>
                 </tr>
             `;
