@@ -178,9 +178,10 @@
         <div class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
           <div class="flex items-center justify-between mb-2">
             <span class="material-symbols-outlined text-emerald-500 bg-emerald-500/10 p-2 rounded-lg">check_circle</span>
+            <span class="text-xs text-green-500 font-bold">Live</span>
           </div>
-          <p class="text-sm text-slate-500">Available</p>
-          <p class="text-2xl font-bold">380</p>
+          <p class="text-sm text-slate-500">Available Items</p>
+          <p id="totalAvailableCount" class="text-2xl font-bold">0</p>
         </div>
         <div class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
           <div class="flex items-center justify-between mb-2">
@@ -190,12 +191,13 @@
           <p class="text-sm text-slate-500">Issued</p>
           <p id="totalIssuanceCount" class="text-2xl font-bold">0</p>
         </div>
-        <div class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-red-200 dark:border-red-900 shadow-sm hover:shadow-md transition-shadow">
+        <div class="bg-white dark:bg-slate-900 p-5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow">
           <div class="flex items-center justify-between mb-2">
-            <span class="material-symbols-outlined text-red-500 bg-red-500/10 p-2 rounded-lg">warning</span>
+            <span class="material-symbols-outlined text-violet-500 bg-violet-500/10 p-2 rounded-lg">assignment_return</span>
+            <span class="text-xs text-green-500 font-bold">Live</span>
           </div>
-          <p class="text-sm text-slate-500">Overdue</p>
-          <p class="text-2xl font-bold text-red-600">3</p>
+          <p class="text-sm text-slate-500">Returns</p>
+          <p id="totalReturnCount" class="text-2xl font-bold">0</p>
         </div>
       </div>
 
@@ -204,233 +206,79 @@
         <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div class="flex items-center justify-between mb-6">
             <h3 class="text-lg font-bold">Issuance Activity</h3>
-            <select class="bg-slate-50 dark:bg-slate-800 border-none rounded-lg text-xs font-semibold focus:ring-primary py-1.5 pl-3 pr-8">
-              <option>Last 7 Days</option>
-              <option>Last 30 Days</option>
+            <select id="issuanceRangeSelect" class="bg-slate-50 dark:bg-slate-800 border-none rounded-lg text-xs font-semibold focus:ring-primary py-1.5 pl-3 pr-8">
+              <option value="7">Last 7 Days</option>
+              <option value="30">Last 30 Days</option>
             </select>
           </div>
           <div class="relative h-48 w-full">
-            <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 500 150">
-              <defs>
-                <linearGradient id="gradientLine" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stop-color="#3211d4" stop-opacity="0.2"></stop>
-                  <stop offset="100%" stop-color="#3211d4" stop-opacity="0"></stop>
-                </linearGradient>
-              </defs>
-              <path d="M0,120 Q50,40 100,80 T200,60 T300,100 T400,20 T500,70 V150 H0 Z" fill="url(#gradientLine)"></path>
-              <path d="M0,120 Q50,40 100,80 T200,60 T300,100 T400,20 T500,70" fill="none" stroke="#3211d4" stroke-linecap="round" stroke-width="3"></path>
-            </svg>
-            <div class="flex justify-between mt-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest px-2">
-              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-            </div>
+            <canvas id="issuanceChart"></canvas>
           </div>
         </div>
 
         <div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
           <div class="flex items-center justify-between mb-6">
             <h3 class="text-lg font-bold">Top Item Categories</h3>
-            <button class="text-primary text-xs font-bold hover:underline" type="button">View Report</button>
           </div>
-          <div class="space-y-4">
-            <div class="space-y-1">
-              <div class="flex justify-between text-xs font-medium"><span>Medical Supplies</span><span>85%</span></div>
-              <div class="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                <div class="h-full bg-primary rounded-full" style="width:85%"></div>
-              </div>
-            </div>
-            <div class="space-y-1">
-              <div class="flex justify-between text-xs font-medium"><span>Lab Equipment</span><span>62%</span></div>
-              <div class="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                <div class="h-full bg-primary/70 rounded-full" style="width:62%"></div>
-              </div>
-            </div>
-            <div class="space-y-1">
-              <div class="flex justify-between text-xs font-medium"><span>Devices & Tools</span><span>45%</span></div>
-              <div class="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                <div class="h-full bg-primary/50 rounded-full" style="width:45%"></div>
-              </div>
-            </div>
-            <div class="space-y-1">
-              <div class="flex justify-between text-xs font-medium"><span>Consumables</span><span>28%</span></div>
-              <div class="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                <div class="h-full bg-primary/30 rounded-full" style="width:28%"></div>
-              </div>
-            </div>
+          <div id="itemCategoriesList" class="space-y-4">
+            <p class="text-xs text-slate-400">Loading...</p>
           </div>
         </div>
       </div>
 
-      <!-- Tables + Alerts Row -->
-      <div class="grid grid-cols-1 xl:grid-cols-4 gap-6">
-        <div class="xl:col-span-3 space-y-6">
+      <!-- Tables Row -->
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
 
-          <!-- Recent Issuances -->
-          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-            <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-              <h3 class="font-bold">Recent Issuances</h3>
-              <button class="text-xs text-primary font-bold" type="button">View All</button>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm">
-                <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 font-semibold uppercase text-[10px] tracking-wider">
-                  <tr>
-                    <th class="px-6 py-3">Patient</th>
-                    <th class="px-6 py-3">Item</th>
-                    <th class="px-6 py-3">Issued By</th>
-                    <th class="px-6 py-3">Date</th>
-                    <th class="px-6 py-3 text-right">Status</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td class="px-6 py-4 flex items-center gap-3">
-                      <div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">JD</div>
-                      <div>
-                        <p class="font-semibold">John Dela Cruz</p>
-                        <p class="text-[10px] text-slate-500">Patient ID: P-4920</p>
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 font-medium">Glucometer Kit</td>
-                    <td class="px-6 py-4 text-slate-500 text-xs">Nurse Reyes</td>
-                    <td class="px-6 py-4 text-slate-500 text-xs">Apr 22, 10:45 AM</td>
-                    <td class="px-6 py-4 text-right">
-                      <span class="bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 px-2 py-1 rounded-full text-[10px] font-bold">Issued</span>
-                    </td>
-                  </tr>
-                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td class="px-6 py-4 flex items-center gap-3">
-                      <div class="h-8 w-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-xs">MS</div>
-                      <div>
-                        <p class="font-semibold">Maria Santos</p>
-                        <p class="text-[10px] text-slate-500">Patient ID: P-3812</p>
-                      </div>
-                    </td>
-                    <td class="px-6 py-4 font-medium">Wheelchair #03</td>
-                    <td class="px-6 py-4 text-slate-500 text-xs">Dr. Lim</td>
-                    <td class="px-6 py-4 text-slate-500 text-xs">Apr 22, 09:30 AM</td>
-                    <td class="px-6 py-4 text-right">
-                      <span class="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 px-2 py-1 rounded-full text-[10px] font-bold">Pending</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+        <!-- Recent Issuances -->
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <h3 class="font-bold">Recent Issuances</h3>
+            <a href="{% url 'issuance-list' %}" class="text-xs text-primary font-bold">View All</a>
           </div>
-
-          <!-- Recent Returns -->
-          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
-            <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-              <h3 class="font-bold">Recent Returns</h3>
-              <button class="text-xs text-primary font-bold" type="button">View All</button>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="w-full text-left text-sm">
-                <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 font-semibold uppercase text-[10px] tracking-wider">
-                  <tr>
-                    <th class="px-6 py-3">Patient</th>
-                    <th class="px-6 py-3">Item</th>
-                    <th class="px-6 py-3">Return Time</th>
-                    <th class="px-6 py-3 text-right">Condition</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td class="px-6 py-4 font-semibold">Roberto Villanueva</td>
-                    <td class="px-6 py-4">Pulse Oximeter #07</td>
-                    <td class="px-6 py-4 text-slate-500 text-xs">Apr 21, 04:20 PM</td>
-                    <td class="px-6 py-4 text-right">
-                      <span class="bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 px-2 py-1 rounded-full text-[10px] font-bold">Good Condition</span>
-                    </td>
-                  </tr>
-                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                    <td class="px-6 py-4 font-semibold">Liza Fernandez</td>
-                    <td class="px-6 py-4">Crutches (Pair)</td>
-                    <td class="px-6 py-4 text-slate-500 text-xs">Apr 21, 02:10 PM</td>
-                    <td class="px-6 py-4 text-right">
-                      <span class="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 px-2 py-1 rounded-full text-[10px] font-bold">Minor Damage</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 font-semibold uppercase text-[10px] tracking-wider">
+                <tr>
+                  <th class="px-6 py-3">Patient</th>
+                  <th class="px-6 py-3">Item</th>
+                  <th class="px-6 py-3">Date</th>
+                </tr>
+              </thead>
+              <tbody id="recentIssuancesBody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr><td colspan="3" class="px-6 py-6 text-center text-xs text-slate-400">Loading...</td></tr>
+              </tbody>
+            </table>
           </div>
-
         </div>
 
-        <!-- Right Column -->
-        <div class="xl:col-span-1 space-y-6">
-
-          <!-- Critical Alerts -->
-          <div class="bg-white dark:bg-slate-900 rounded-xl border border-red-200 dark:border-red-900 shadow-sm overflow-hidden">
-            <div class="bg-red-500 px-4 py-3 flex items-center gap-2 text-white">
-              <span class="material-symbols-outlined text-sm">emergency_home</span>
-              <h3 class="text-sm font-bold uppercase tracking-wider">Overdue Alerts</h3>
-            </div>
-            <div class="p-4 space-y-4">
-              <div class="p-3 bg-red-50 dark:bg-red-900/10 rounded-lg border border-red-100 dark:border-red-900/30 flex gap-3">
-                <span class="material-symbols-outlined text-red-600 text-xl shrink-0">warning</span>
-                <div>
-                  <p class="text-xs font-bold text-red-700 dark:text-red-400">Overdue: Wheelchair #02</p>
-                  <p class="text-[10px] text-red-600/80">Patient: Marcus Reyes</p>
-                  <p class="text-[10px] text-red-600/80">Due: 3 days ago</p>
-                </div>
-              </div>
-              <div class="p-3 bg-red-50 dark:bg-red-900/10 rounded-lg border border-red-100 dark:border-red-900/30 flex gap-3">
-                <span class="material-symbols-outlined text-red-600 text-xl shrink-0">warning</span>
-                <div>
-                  <p class="text-xs font-bold text-red-700 dark:text-red-400">Overdue: Nebulizer #05</p>
-                  <p class="text-[10px] text-red-600/80">Patient: Sarah Kay</p>
-                  <p class="text-[10px] text-red-600/80">Due: 1 day ago</p>
-                </div>
-              </div>
-              <div class="p-3 bg-red-50 dark:bg-red-900/10 rounded-lg border border-red-100 dark:border-red-900/30 flex gap-3">
-                <span class="material-symbols-outlined text-red-600 text-xl shrink-0">warning</span>
-                <div>
-                  <p class="text-xs font-bold text-red-700 dark:text-red-400">Overdue: IV Pump #01</p>
-                  <p class="text-[10px] text-red-600/80">Patient: Leo Mendez</p>
-                  <p class="text-[10px] text-red-600/80">Due: 2 days ago</p>
-                </div>
-              </div>
-              <button class="w-full py-2 text-xs font-bold text-red-600 border border-red-200 dark:border-red-900 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors" type="button">
-                Send Reminders to All
-              </button>
-            </div>
+        <!-- Recent Returns -->
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+            <h3 class="font-bold">Recent Returns</h3>
+            <a href="{% url 'return-list' %}" class="text-xs text-primary font-bold">View All</a>
           </div>
-
-          <!-- Live System Logs -->
-          <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-4 shadow-sm">
-            <h4 class="text-xs font-bold uppercase text-slate-400 tracking-widest mb-4">Live System Logs</h4>
-            <div class="space-y-4">
-              <div class="flex gap-3 text-xs">
-                <div class="shrink-0 h-1.5 w-1.5 mt-1 rounded-full bg-primary"></div>
-                <div>
-                  <p class="text-slate-400 text-[10px]">10:52 AM</p>
-                  <p>New patient registered: <b>Ana Cruz</b></p>
-                </div>
-              </div>
-              <div class="flex gap-3 text-xs">
-                <div class="shrink-0 h-1.5 w-1.5 mt-1 rounded-full bg-emerald-500"></div>
-                <div>
-                  <p class="text-slate-400 text-[10px]">10:48 AM</p>
-                  <p>Inventory update: <b>5 items added</b> to stock</p>
-                </div>
-              </div>
-              <div class="flex gap-3 text-xs">
-                <div class="shrink-0 h-1.5 w-1.5 mt-1 rounded-full bg-amber-500"></div>
-                <div>
-                  <p class="text-slate-400 text-[10px]">10:35 AM</p>
-                  <p>Auto-backup completed successfully</p>
-                </div>
-              </div>
-            </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 font-semibold uppercase text-[10px] tracking-wider">
+                <tr>
+                  <th class="px-6 py-3">Patient</th>
+                  <th class="px-6 py-3">Item</th>
+                  <th class="px-6 py-3">Return Time</th>
+                </tr>
+              </thead>
+              <tbody id="recentReturnsBody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                <tr><td colspan="3" class="px-6 py-6 text-center text-xs text-slate-400">Loading...</td></tr>
+              </tbody>
+            </table>
           </div>
-
         </div>
+
       </div>
     </main>
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{% static 'js/admindashboard.js' %}"></script>
 </body>
 </html>
