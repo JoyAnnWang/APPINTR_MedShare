@@ -349,7 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadReturns() {
         try {
-            const response = await fetch(`${API_BASE_URL}/returns/`);
+            const response = await fetch(`${API_BASE_URL}/return/`);
             if (!response.ok) throw new Error(`Failed to fetch returns: ${response.status}`);
             allReturns = await response.json();
             populateFilters(allReturns);
@@ -401,7 +401,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(addReturnForm);
             const payload  = Object.fromEntries(formData.entries());
 
-            const response = await fetch(`${API_BASE_URL}/returns/`, {
+            const response = await fetch(`${API_BASE_URL}/return/`, {
                 method:  "POST",
                 headers: { "Content-Type": "application/json", "X-CSRFToken": getCookie("csrftoken") },
                 body:    JSON.stringify(payload)
@@ -442,7 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(editReturnForm);
             const payload  = Object.fromEntries(formData.entries());
 
-            const response = await fetch(`${API_BASE_URL}/returns/${pk}/`, {
+            const response = await fetch(`${API_BASE_URL}/return/${pk}/`, {
                 method:  "PATCH",
                 headers: { "Content-Type": "application/json", "X-CSRFToken": getCookie("csrftoken") },
                 body:    JSON.stringify(payload)
@@ -479,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const pk       = deleteReturnPk.value;
-            const response = await fetch(`${API_BASE_URL}/returns/${pk}/delete/`, {
+            const response = await fetch(`${API_BASE_URL}/return/${pk}/delete/`, {
                 method: "DELETE",
                 headers: { "X-CSRFToken": getCookie("csrftoken") }
             });

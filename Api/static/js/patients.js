@@ -440,7 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadStatusData() {
         try {
-            const response = await fetch(`${API_BASE_URL}/statuses/`);
+            const response = await fetch(`${API_BASE_URL}/status/`);
             if (!response.ok) {
                 throw new Error("Failed to load status dropdown data.");
             }

@@ -337,7 +337,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     async function loadIssuances() {
         try {
-            const response = await fetch(`${API_BASE_URL}/issuances/`);
+            const response = await fetch(`${API_BASE_URL}/issuance/`);
             if (!response.ok) throw new Error(`Failed to fetch issuances: ${response.status}`);
             allIssuances = await response.json();
             populateFilters(allIssuances);
@@ -389,7 +389,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(addIssuanceForm);
             const payload  = Object.fromEntries(formData.entries());
 
-            const response = await fetch(`${API_BASE_URL}/issuances/`, {
+            const response = await fetch(`${API_BASE_URL}/issuance/`, {
                 method:  "POST",
                 headers: { "Content-Type": "application/json", "X-CSRFToken": getCookie("csrftoken") },
                 body:    JSON.stringify(payload)
@@ -430,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const formData = new FormData(editIssuanceForm);
             const payload  = Object.fromEntries(formData.entries());
 
-            const response = await fetch(`${API_BASE_URL}/issuances/${pk}/`, {
+            const response = await fetch(`${API_BASE_URL}/issuance/${pk}/`, {
                 method:  "PATCH",
                 headers: { "Content-Type": "application/json", "X-CSRFToken": getCookie("csrftoken") },
                 body:    JSON.stringify(payload)
@@ -467,7 +467,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const pk       = deleteIssuancePk.value;
-            const response = await fetch(`${API_BASE_URL}/issuances/${pk}/delete/`, {
+            const response = await fetch(`${API_BASE_URL}/issuance/${pk}/delete/`, {
                 method: "DELETE",
                 headers: { "X-CSRFToken": getCookie("csrftoken") }
             });
