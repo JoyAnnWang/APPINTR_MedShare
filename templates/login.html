@@ -1,0 +1,147 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>MedShare - Login</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#3211d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#131022",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased transition-colors duration-200 min-h-screen flex items-center justify-center px-4">
+
+    <div class="w-full max-w-md">
+
+        <!-- Logo -->
+        <div class="flex items-center justify-center gap-2 text-primary mb-8">
+            <span class="material-symbols-outlined text-4xl font-bold">stethoscope</span>
+            <h1 class="text-2xl font-bold tracking-tight">MedShare</h1>
+        </div>
+
+        <!-- Card -->
+        <div class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm p-8">
+
+            <div class="mb-6">
+                <h2 class="text-xl font-bold text-slate-900 dark:text-slate-100">Welcome back</h2>
+                <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">Sign in to your account to continue.</p>
+            </div>
+
+            <!-- Django messages -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="mb-4 rounded-lg px-4 py-3 text-sm
+                        {% if message.tags == 'error' %}bg-red-100 text-red-700 border border-red-200
+                        {% else %}bg-emerald-100 text-emerald-700 border border-emerald-200{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+            <!-- Login Form -->
+            <form method="POST" action="{% url 'login' %}" class="space-y-5">
+                {% csrf_token %}
+
+                <!-- Username -->
+                <div>
+                    <label for="username" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
+                        Username
+                    </label>
+                    <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        required
+                        autocomplete="username"
+                        placeholder="Enter your username"
+                        class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-slate-400"
+                    />
+                </div>
+
+                <!-- Password -->
+                <div>
+                    <label for="password" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5">
+                        Password
+                    </label>
+                    <div class="relative">
+                        <input
+                            id="password"
+                            name="password"
+                            type="password"
+                            required
+                            autocomplete="current-password"
+                            placeholder="Enter your password"
+                            class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 px-4 py-3 pr-11 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all placeholder:text-slate-400"
+                        />
+                        <button
+                            type="button"
+                            id="togglePassword"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+                            aria-label="Toggle password visibility"
+                        >
+                            <span class="material-symbols-outlined text-xl" id="toggleIcon">visibility</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <button
+                    type="submit"
+                    class="w-full flex items-center justify-center gap-2 rounded-xl bg-primary hover:bg-primary/90 active:scale-[0.98] text-white font-semibold px-4 py-3 text-sm transition-all duration-150 mt-2"
+                >
+                    <span class="material-symbols-outlined text-lg">login</span>
+                    Sign In
+                </button>
+            </form>
+        </div>
+
+        <!-- Footer -->
+        <p class="text-center text-xs text-slate-400 mt-6">
+            MedShare &copy; {% now "Y" %} &mdash; Academic Year 25/26
+        </p>
+    </div>
+
+    <script>
+        // Toggle password visibility
+        const togglePassword = document.getElementById("togglePassword");
+        const passwordInput  = document.getElementById("password");
+        const toggleIcon     = document.getElementById("toggleIcon");
+
+        togglePassword.addEventListener("click", () => {
+            const isHidden = passwordInput.type === "password";
+            passwordInput.type = isHidden ? "text" : "password";
+            toggleIcon.textContent = isHidden ? "visibility_off" : "visibility";
+        });
+    </script>
+
+</body>
+</html>

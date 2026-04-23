@@ -442,9 +442,26 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const response = await fetch(`${API_BASE_URL}/status/`);
             if (!response.ok) {
-                throw new Error("Failed to load status dropdown data.");
+                // Log the exact status code and response body to help diagnose the endpoint issue
+                const bodyText = await response.text().catch(() => "(unreadable)");
+                console.error(`Status API error ${response.status} ${response.statusText}:`, bodyText);
+                throw new Error(`Status API returned ${response.status}: ${response.statusText}`);
             }
-            allStatuses = await response.json();
+            const data = await response.json();
+
+            // Support both a plain array and a paginated response (e.g. { results: [...] })
+            allStatuses = Array.isArray(data) ? data : (data.results ?? []);
+
+            if (!allStatuses.length) {
+                console.warn("Status API returned an empty list.");
+            }
+
+            // Normalise field names: accept id/status_name OR pk/name OR id/name
+            allStatuses = allStatuses.map(s => ({
+                id:          s.id          ?? s.pk,
+                status_name: s.status_name ?? s.name ?? s.label ?? String(s.id ?? s.pk)
+            }));
+
             populateModalStatuses();
         } catch (error) {
             console.error("Status dropdown error:", error);

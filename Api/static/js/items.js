@@ -395,8 +395,8 @@ document.addEventListener("DOMContentLoaded", () => {
     async function loadDropdownData() {
         try {
             const [statusRes, typeRes] = await Promise.all([
-                fetch(`${API_BASE_URL}/item-statuses/`),
-                fetch(`${API_BASE_URL}/item-types/`)
+                fetch(`${API_BASE_URL}/itemstatus/`),
+                fetch(`${API_BASE_URL}/itemtypes/`)
             ]);
 
             if (!statusRes.ok) throw new Error("Failed to load statuses.");

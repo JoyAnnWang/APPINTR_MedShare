@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from rest_framework import generics
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from .models import Role, Status, ItemStatus, ItemType, Staff, Patient, Item, Issuance, Return
@@ -155,22 +158,50 @@ class ReturnDeleteAPIView(generics.DestroyAPIView):
    serializer_class = ReturnSerializer
 
 
+# ─── Auth Views ───────────────────────────────────────────────────────────────
+
+def login_view(request):
+   if request.user.is_authenticated:
+      return redirect('index')
+   if request.method == "POST":
+      username = request.POST.get("username", "").strip()
+      password = request.POST.get("password", "")
+      user = authenticate(request, username=username, password=password)
+      if user is not None:
+         login(request, user)
+         return redirect('index')
+      else:
+         messages.error(request, "Invalid username or password. Please try again.")
+   return render(request, "login.html")
+
+
+def logout_view(request):
+   logout(request)
+   return redirect('login')
+
+
 # ─── Page Views ───────────────────────────────────────────────────────────────
 
+@login_required
 def index(request):
    return render(request, "admindashboard.html")
 
+@login_required
 def staff_list(request):
    return render(request, "staff.html")
 
+@login_required
 def patient_list(request):
    return render(request, "patient.html")
 
+@login_required
 def item_list(request):
    return render(request, "item.html")
 
+@login_required
 def issuance_list(request):
    return render(request, "Issuance.html")
 
+@login_required
 def return_list(request):
    return render(request, "return.html")
