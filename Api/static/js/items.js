@@ -201,8 +201,8 @@ document.addEventListener("DOMContentLoaded", () => {
         modalItemType.innerHTML  = `<option value="">Select type</option>`;
         editItemType.innerHTML   = `<option value="">Select type</option>`;
         allTypes.forEach(type => {
-            modalItemType.innerHTML += `<option value="${type.id}">${type.type_name}</option>`;
-            editItemType.innerHTML  += `<option value="${type.id}">${type.type_name}</option>`;
+            modalItemType.innerHTML += `<option value="${type.id}">${type.item_type_name}</option>`;
+            editItemType.innerHTML  += `<option value="${type.id}">${type.item_type_name}</option>`;
         });
     }
 
